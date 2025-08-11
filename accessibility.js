@@ -1,17 +1,74 @@
-// accessibility.js — toggles Screen Reader Mode
-
 (function () {
-  const body = document.body;
-  const STORAGE_KEY = "screenReaderMode";
+    let screenReaderEnabled = false;
+    let speech = window.speechSynthesis;
+    let addedTabIndexes = [];
 
-  // Load saved state
-  if (localStorage.getItem(STORAGE_KEY) === "true") {
-    body.classList.add("sr-mode");
-  }
+    function speak(text) {
+        if (!text) return;
+        speech.cancel();
+        let utterance = new SpeechSynthesisUtterance(text);
+        speech.speak(utterance);
+    }
 
-  // Function to toggle
-  window.toggleScreenReaderMode = function () {
-    const isOn = body.classList.toggle("sr-mode");
-    localStorage.setItem(STORAGE_KEY, isOn);
-  };
+    function getElementDescription(el) {
+        return (
+            el.getAttribute('aria-label') ||
+            el.alt ||
+            el.innerText.trim()
+        );
+    }
+
+    function onFocus(e) {
+        if (!screenReaderEnabled) return;
+        speak(getElementDescription(e.target));
+    }
+
+    function onKeyDown(e) {
+        if (!screenReaderEnabled) return;
+        if (e.key === 'Enter' && document.activeElement) {
+            e.preventDefault();
+            document.activeElement.click();
+        }
+    }
+
+    function enableFocusForAll() {
+        const allElements = document.querySelectorAll('*');
+        allElements.forEach(el => {
+            const hasClick = el.onclick || el.getAttribute('role') === 'button';
+            const isNaturallyFocusable = el.tabIndex >= 0;
+            if (hasClick && !isNaturallyFocusable) {
+                el.tabIndex = 0;
+                addedTabIndexes.push(el);
+            }
+        });
+    }
+
+    function removeAddedFocus() {
+        addedTabIndexes.forEach(el => {
+            el.removeAttribute('tabindex');
+        });
+        addedTabIndexes = [];
+    }
+
+    function toggleScreenReader() {
+        screenReaderEnabled = !screenReaderEnabled;
+        speech.cancel();
+        if (screenReaderEnabled) {
+            enableFocusForAll();
+            speak('Screen reader mode enabled');
+        } else {
+            removeAddedFocus();
+            speak('Screen reader mode disabled');
+        }
+    }
+
+    document.addEventListener('focus', onFocus, true);
+    document.addEventListener('keydown', onKeyDown);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const toggleBtn = document.getElementById('sr-toggle-btn');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', toggleScreenReader);
+        }
+    });
 })();
