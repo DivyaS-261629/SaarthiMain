@@ -261,6 +261,177 @@ renderGrid();
   </div>
 </footer>
 
+<!-- Mode Selection + Guided Listening Mode -->
+<script>
+(function() {
+    let blindnessMode = false;
+    let speechUnlocked = false;
+    let inSelectionScreen = true;
+    let focusIndex = 0;
+    let focusableSequence = [];
 
+    function styleButton(btn, bg, text = '#fff') {
+        btn.style.backgroundColor = bg;
+        btn.style.color = text;
+        btn.style.padding = '15px 30px';
+        btn.style.margin = '10px';
+        btn.style.fontSize = '1.2rem';
+        btn.style.border = 'none';
+        btn.style.borderRadius = '8px';
+        btn.style.cursor = 'pointer';
+    }
+
+    function speak(text) {
+        if (!text.trim()) return;
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.rate = 1;
+            utter.pitch = 1;
+            speechSynthesis.speak(utter);
+        }
+    }
+
+    // Overlay
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = '#232444';
+    overlay.style.color = '#fff';
+    overlay.style.display = 'flex';
+    overlay.style.flexDirection = 'column';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.zIndex = '10000';
+
+    const heading = document.createElement('h1');
+    heading.innerText = 'Choose Your Mode';
+    heading.style.fontSize = '2rem';
+    heading.style.marginBottom = '20px';
+    heading.style.textAlign = 'center';
+
+    const btnReadable = document.createElement('button');
+    btnReadable.innerText = 'Readable Mode';
+    btnReadable.setAttribute('aria-label', 'Readable Mode');
+    styleButton(btnReadable, '#5457e2');
+
+    const btnListening = document.createElement('button');
+    btnListening.innerText = 'Listening Mode';
+    btnListening.setAttribute('aria-label', 'Listening Mode');
+    styleButton(btnListening, '#ffd600', '#232444');
+
+    overlay.appendChild(heading);
+    overlay.appendChild(btnReadable);
+    overlay.appendChild(btnListening);
+    document.body.appendChild(overlay);
+
+    const buttons = [btnReadable, btnListening];
+
+    // Unlock speech
+    function unlockSpeech() {
+        if (!speechUnlocked) {
+            speechUnlocked = true;
+            speak("Choose a mode to navigate further: Readable Mode. Listening Mode.");
+            focusIndex = 0;
+            buttons[focusIndex].focus();
+            speak(buttons[focusIndex].getAttribute('aria-label'));
+        }
+    }
+    document.addEventListener('keydown', unlockSpeech, { once: true });
+    document.addEventListener('click', unlockSpeech, { once: true });
+
+    // Mode selection screen Tab lock
+    document.addEventListener('keydown', e => {
+        if (inSelectionScreen && e.key === 'Tab') {
+            e.preventDefault();
+            focusIndex = (focusIndex + 1) % buttons.length;
+            buttons[focusIndex].focus();
+            speak(buttons[focusIndex].getAttribute('aria-label'));
+        }
+        else if (inSelectionScreen && e.key === 'Enter' && document.activeElement.tagName === 'BUTTON') {
+            if (document.activeElement === btnReadable) {
+                blindnessMode = false;
+                inSelectionScreen = false;
+                overlay.remove();
+            } else if (document.activeElement === btnListening) {
+                blindnessMode = true;
+                inSelectionScreen = false;
+                overlay.remove();
+                setupListeningSequence();
+                speak("Listening mode enabled. Use Tab to move forward and Enter to activate links or buttons.");
+            }
+        }
+    });
+
+    // Build custom sequence for Listening Mode
+    function setupListeningSequence() {
+        const selectors = [
+            'header nav a',
+            'h1','h2','h3','h4','h5','h6',
+            'p',
+            'button',
+            'img',
+            '.feature-box',
+            '.faq-question',
+            '.faq-answer'
+        ];
+        focusableSequence = Array.from(document.querySelectorAll(selectors.join(',')))
+            .filter(el => el.offsetParent !== null) // visible
+            .map(el => {
+                el.setAttribute('tabindex', '0');
+                return el;
+            });
+        focusIndex = 0;
+        focusableSequence[0].focus();
+        speakElement(focusableSequence[0]);
+    }
+
+    function speakElement(el) {
+        let text = el.getAttribute('aria-label') || el.alt || el.innerText || el.placeholder || '';
+        speak(text);
+    }
+
+    // Custom Tab navigation in Listening Mode
+    document.addEventListener('keydown', e => {
+        if (!inSelectionScreen && blindnessMode && e.key === 'Tab') {
+            e.preventDefault();
+            focusIndex = (focusIndex + 1) % focusableSequence.length;
+            focusableSequence[focusIndex].focus();
+            speakElement(focusableSequence[focusIndex]);
+        }
+    });
+
+    // Mouse fallback
+    btnReadable.addEventListener('click', () => {
+        blindnessMode = false;
+        inSelectionScreen = false;
+        overlay.remove();
+    });
+
+    btnListening.addEventListener('click', () => {
+        blindnessMode = true;
+        inSelectionScreen = false;
+        overlay.remove();
+        setupListeningSequence();
+        speak("Listening mode enabled. Use Tab to move forward and Enter to activate links or buttons.");
+    });
+
+    // Enter key activation in Listening Mode
+    document.addEventListener('keydown', e => {
+        if (!inSelectionScreen && blindnessMode && e.key === 'Enter') {
+            const el = focusableSequence[focusIndex];
+            if (el.tagName === 'A' || el.tagName === 'BUTTON') {
+                el.click();
+            }
+        }
+    });
+
+})();
+</script>
+  
 </body>
 </html>
+
