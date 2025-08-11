@@ -125,6 +125,7 @@
 
 
 <header>
+<button id="screenReaderBtn">🔊 Read Aloud</button>
   <div class="brand">Saarthi</div>
   <nav>
     <a href="index.html">Home</a>
@@ -432,6 +433,22 @@
         calcWage();
       });
     })();
+document.getElementById('screenReaderBtn').addEventListener('click', function () {
+    // Get all visible text from the page
+    const text = document.body.innerText;
+
+    // Create a speech synthesis utterance
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    // Optional: set voice, pitch, rate
+    utterance.rate = 1; // speed
+    utterance.pitch = 1; // tone
+
+    // Speak the text
+    speechSynthesis.speak(utterance);
+});
+
+
   </script>
 </body>
 </html>
