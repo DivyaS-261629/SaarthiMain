@@ -1,8 +1,5 @@
 <!doctype html>
 <html lang="en">
-
-
-
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -21,105 +18,235 @@
   --error: #EF5350;
   --accessible-bg: #2E2E2E;
   --accessible-text: #E0E0E0;
+--root-font: 16px;
 }
 
+/* --- General Layout --- */
+html, body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  font-size: var(--root-font);
+  color: var(--text);
+}
 
-html,body{margin:0;font-family:'Open Sans',sans-serif;font-size:16px;background:var(--bg);color:var(--text);} 
-header{position:fixed;top:0;left:0;right:0;background:#fff;border-bottom:2px solid var(--primary);display:flex;align-items:center;justify-content:space-between;padding:12px 18px;z-index:1000;flex-wrap:wrap;min-height:60px;}
-
-
+/* --- Header --- */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: #fff;
+  border-bottom: 2px solid var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  z-index: 1000;
+  flex-wrap: wrap;
+  min-height: 60px;
+}
+.brand {
+  font-family: 'Montserrat';
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 1.25rem;
+}
 nav, .dropbtn, .dropdown-content a {
   font-family: 'Open Sans', sans-serif;
   font-weight: 600;
 }
+nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+nav a {
+  text-decoration: none;
+  color: var(--text);
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+nav a[aria-current="page"] {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+.controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ctrl-btn {
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.font-slider {
+  width: 100px;
+}
 
-.brand{font-family:'Montserrat';font-weight:700;color:var(--primary);font-size:1.25rem;}
-nav{display:flex;gap:10px;flex-wrap:wrap}
-nav a{text-decoration:none;color:var(--text);padding:6px 8px;border-radius:6px;font-weight:600}
-nav a[aria-current="page"]{background:var(--accent);color:var(--accent-text)}
-.controls{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
-.ctrl-btn{border:1px solid #ccc;background:#fff;border-radius:6px;padding:4px 8px;cursor:pointer;}
-.font-slider{width:100px;}
-main{display:flex;gap:1rem;margin-top:100px;flex-wrap:wrap;padding:0 16px;max-width:1400px;margin-left:auto;margin-right:auto;}
+/* --- Main content --- */
+main {
+  max-width: 1100px;
+  margin: 110px auto 60px;
+  padding: 18px;
+}
 
+/* --- Filters --- */
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.chip-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.chip {
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 8px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  user-select: none;
+}
+.chip[aria-pressed="true"] {
+  background: var(--primary);
+  color: #fff;
+  border-color: transparent;
+}
+.clear-chip {
+  background: transparent;
+  border: 1px dashed #bbb;
+  color: #333;
+}
 
-.filters{display:flex;flex-direction:column;gap:12px;margin-bottom:18px}
-.chip-row{display:flex;gap:8px;flex-wrap:wrap}
-.chip{background:#fff;border:1px solid #ddd;padding:8px 12px;border-radius:999px;cursor:pointer;user-select:none}
-.chip[aria-pressed="true"]{background:var(--primary);color:#fff;border-color:transparent}
-.clear-chip{background:transparent;border:1px dashed #bbb;color:#333}
-#resourcesGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+/* --- Grid --- */
+#resourcesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+}
 
-.card{background:#fff;border-left:6px solid var(--primary);border-radius:8px;padding:0.8rem;cursor:pointer;transition:background .16s;}
+/* --- Card --- */
+.card {
+  background: #fff;
+  border-left: 6px solid var(--primary);
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.meta-tag {
+  display: inline-block;
+  background: #eee;
+  color: #333;
+  font-size: .8rem;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 12px;
+  margin-right: 8px;
+  margin-bottom: 6px;
+}
+.card h3 {
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1rem;
+  color: #000;
+}
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: auto;
+}
+.btn {
+  background: #1976d2;
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn.secondary {
+  background: #42a5f5;
+  color: #fff;
+}
 
-.meta-tag{display:inline-block;background:#eee;color:#333;font-size:.8rem;font-weight:600;padding:6px 10px;border-radius:12px;margin-right:8px;margin-bottom:6px}
-.card h3{margin:0;font-family:'Montserrat',sans-serif;font-size:1rem;color:#000}
-.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto}
-.btn{background:#1976d2;color:#fff;border:none;padding:8px 12px;border-radius:8px;cursor:pointer}
-.btn.secondary{background:#42a5f5;color:#fff}
-
+/* --- Dropdown --- */
 .dropdown {
   position: relative;
   display: inline-block;
 }
 .dropbtn {
-  background:none;
-  border:none;
-  cursor:pointer;
-  font-family:'Open Sans',sans-serif;
-  font-size:0.95rem;
-  color:#212121;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.95rem;
+  color: #212121;
 }
 .dropdown-content {
-  display:none;
-  position:absolute;
-  background-color:white;
-  box-shadow:0 2px 6px rgba(0,0,0,0.15);
-  border-radius:6px;
-  min-width:180px;
-  z-index:1000;
+  display: none;
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  border-radius: 6px;
+  min-width: 180px;
+  z-index: 1000;
 }
 .dropdown-content a {
-  display:block;
-  padding:8px 12px;
-  color:#212121;
-  text-decoration:none;
+  display: block;
+  padding: 8px 12px;
+  color: #212121;
+  text-decoration: none;
 }
 .dropdown-content a:hover {
-  background-color:#f5f5f5;
+  background-color: #f5f5f5;
 }
 .dropdown:hover .dropdown-content {
-  display:block;
+  display: block;
 }
 
-body.accessible{background:var(--accessible-bg);color:var(--accessible-text);}
-body.accessible header{background:var(--accessible-bg);}
-body.accessible nav a{color:var(--accessible-text)}
-body.accessible nav a[aria-current="page"]{background:var(--accent);color:var(--accent-text)}
-body.accessible .search-bar{background:var(--accessible-bg);color:var(--accessible-text);border-color:var(--accessible-text)}
-body.accessible .card{background:#3a3a3a;color:var(--accessible-text);}
-@media (max-width:768px){#sidePanel{position:static;width:100%;}}
-
+/* --- Accessibility mode --- */
+body.accessible {
+  background: var(--accessible-bg);
+  color: var(--accessible-text);
+}
+body.accessible header {
+  background: var(--accessible-bg);
+}
+body.accessible nav a {
+  color: var(--accessible-text);
+}
+body.accessible nav a[aria-current="page"] {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+body.accessible .card {
+  background: #3a3a3a;
+  color: var(--accessible-text);
+}
 </style>
-<link rel="stylesheet" href="commonstyles.css">
-<script src="header.js" defer></script>
-
-
 </head>
 <body>
-
-
 
 <header>
   <div class="brand">Saarthi</div>
   <nav>
-    <a href="index.html">Home</a>
+    <a href="home.html">Home</a>
     <a href="About us.html">About us</a>
     <a href="finder acha wala.html">School &amp; Therapist Finder</a>
     <a href="r6.html" aria-current="page">Resources</a>
     <a href="Community forum.html">Community</a>
-    <a href="Careers.html"> Career</a>
-    <a href="Contact us.html"> Contact us</a>
+    <a href="Careers.html">Career</a>
+    <a href="Contact us.html">Contact us</a>
   </nav>
   <div class="controls">
     <button id="decreaseFont" class="ctrl-btn">A-</button>
@@ -129,25 +256,23 @@ body.accessible .card{background:#3a3a3a;color:var(--accessible-text);}
   </div>
 </header>
 
-
-
 <main>
 <h1 style="font-family:Montserrat, sans-serif;">Resources</h1>
 <p>Accessible, person-first resources for caregivers and people with special needs.</p>
 <section class="filters">
   <div class="chip-row">
     <button class="chip" data-age="all" aria-pressed="true">Show All</button>
-    <button class="chip" data-age="children" aria-pressed="false">Children</button>
-    <button class="chip" data-age="teens" aria-pressed="false">Teens</button>
-    <button class="chip" data-age="adults" aria-pressed="false">Adults</button>
-    <button class="chip" data-age="elderly" aria-pressed="false">Elderly</button>
+    <button class="chip" data-age="children">Children</button>
+    <button class="chip" data-age="teens">Teens</button>
+    <button class="chip" data-age="adults">Adults</button>
+    <button class="chip" data-age="elderly">Elderly</button>
   </div>
   <div class="chip-row">
     <button class="chip" data-type="all" aria-pressed="true">Show All</button>
-    <button class="chip" data-type="physical" aria-pressed="false">Physical</button>
-    <button class="chip" data-type="intellectual" aria-pressed="false">Intellectual</button>
-    <button class="chip" data-type="developmental" aria-pressed="false">Developmental</button>
-    <button class="chip" data-type="sensory" aria-pressed="false">Sensory</button>
+    <button class="chip" data-type="physical">Physical</button>
+    <button class="chip" data-type="intellectual">Intellectual</button>
+    <button class="chip" data-type="developmental">Developmental</button>
+    <button class="chip" data-type="sensory">Sensory</button>
   </div>
   <div class="chip-row">
     <button id="clearFilters" class="chip clear-chip">Clear filters</button>
@@ -157,38 +282,24 @@ body.accessible .card{background:#3a3a3a;color:var(--accessible-text);}
   <div id="resourcesGrid"></div>
 </section>
 </main>
+
 <script>
 const allResources = [
   {id:"children-physical",age:"children",type:"physical",title:"Children — Resources for persons with physical disabilities",pdfUrl:"https://yellow-anthiathia-29.tiiny.site/CP.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"children-intellectual",age:"children",type:"intellectual",title:"Children — Resources for persons with intellectual disabilities",pdfUrl:"https://yellow-anthiathia-29.tiiny.site/Ci.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"children-developmental",age:"children",type:"developmental",title:"Children — Resources for persons with developmental disabilities",pdfUrl:"https://yellow-anthiathia-29.tiiny.site/Cd.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"children-sensory",age:"children",type:"sensory",title:"Children — Resources for persons with sensory disabilities",pdfUrl:"https://yellow-anthiathia-29.tiiny.site/Cs.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"teens-physical",age:"teens",type:"physical",title:"Teens — Resources for persons with physical disabilities",pdfUrl:"https://yellow-anthiathia-29.tiiny.site/Ei.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"teens-intellectual",age:"teens",type:"intellectual",title:"Teens — Resources for persons with intellectual disabilities",pdfUrl:"https://yellow-anthiathia-29.tiiny.site/Ti.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"teens-developmental",age:"teens",type:"developmental",title:"Teens — Resources for persons with developmental disabilities",pdfUrl:"YOUR_FILE_PATH/teens-developmental.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"teens-sensory",age:"teens",type:"sensory",title:"Teens — Resources for persons with sensory disabilities",pdfUrl:"https://yellow-anthiathia-29.tiiny.site/Ts.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"adults-physical",age:"adults",type:"physical",title:"Adults — Resources for persons with physical disabilities",pdfUrl:"https://yellow-anthiathia-29.tiiny.site/Ad.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"adults-intellectual",age:"adults",type:"intellectual",title:"Adults — Resources for persons with intellectual disabilities",pdfUrl:"https://yellow-anthiathia-29.tiiny.site/Ai.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"adults-developmental",age:"adults",type:"developmental",title:"Adults — Resources for persons with developmental disabilities",pdfUrl:"https://yellow-anthiathia-29.tiiny.site/Ad.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"adults-sensory",age:"adults",type:"sensory",title:"Adults — Resources for persons with sensory disabilities",pdfUrl:"https://yellow-anthiathia-29.tiiny.site/As.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"elderly-physical",age:"elderly",type:"physical",title:"Elderly — Resources for persons with physical disabilities",pdfUrl:"YOUR_FILE_PATH/elderly-physical.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"elderly-intellectual",age:"elderly",type:"intellectual",title:"Elderly — Resources for persons with intellectual disabilities",pdfUrl:"https://yellow-anthiathia-29.tiiny.site/Ei.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"elderly-developmental",age:"elderly",type:"developmental",title:"Elderly — Resources for persons with developmental disabilities",pdfUrl:"https://yellow-anthiathia-29.tiiny.site/Ei.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"},
-
   {id:"elderly-sensory",age:"elderly",type:"sensory",title:"Elderly — Resources for persons with sensory disabilities",pdfUrl:"https://yellow-anthiathia-29.tiiny.site/Ei.pdf",audioUrl:"https://jumpshare.com/share/OYAqHq6U9BsCDd0G3JrM"}
 ];
 
@@ -207,7 +318,7 @@ function renderGrid(ageFilter='all',typeFilter='all'){
     else if(res.type==='sensory'){typeDescription='Resources for sensory processing challenges, including calming environments and tools.';}
     const card=document.createElement('article');
     card.className='card';
-    card.innerHTML=`<div><span class="meta-tag">Age Group: ${capitalize(res.age)}</span><span class="meta-tag">Disability Type: ${capitalize(res.type)}</span></div><h3>${escapeHtml(res.title)}</h3><p>${escapeHtml(typeDescription)}</p><div class="actions"><button class="btn" data-action="preview-pdf" data-pdf="${res.pdfUrl}">Preview PDF</button><button class="btn secondary" data-action="preview-audio" data-audio="${res.audioUrl}">Preview Audio</button></div>`;
+    card.innerHTML = `<div><span class="meta-tag">Age Group: ${capitalize(res.age)}</span><span class="meta-tag">Disability Type: ${capitalize(res.type)}</span></div><h3>${escapeHtml(res.title)}</h3><p>${escapeHtml(typeDescription)}</p><div class="actions"><button class="btn" data-action="preview-pdf" data-pdf="${res.pdfUrl}">Preview PDF</button><button class="btn secondary" data-action="preview-audio" data-audio="${res.audioUrl}">Preview Audio</button></div>`;
     grid.appendChild(card);
   });
 }
@@ -220,33 +331,48 @@ function currentType(){const a=[...document.querySelectorAll('.chip[data-type]')
 document.querySelectorAll('.chip[data-age]').forEach(c=>c.addEventListener('click',()=>{setAgeFilter(c.getAttribute('data-age'));renderGrid(currentAge(),currentType());}));
 document.querySelectorAll('.chip[data-type]').forEach(c=>c.addEventListener('click',()=>{setTypeFilter(c.getAttribute('data-type'));renderGrid(currentAge(),currentType());}));
 document.getElementById('clearFilters').addEventListener('click',()=>{setAgeFilter('all');setTypeFilter('all');renderGrid();});
-
-document.getElementById('resourcesGrid').addEventListener('click',(e)=>{
-  if(e.target.dataset.action==='preview-pdf'){
-    window.open(e.target.dataset.pdf,'_blank');
-  }
-  if(e.target.dataset.action==='preview-audio'){
-    window.open(e.target.dataset.audio,'_blank');
-  }
-});
-
-document.getElementById('increaseFont').addEventListener('click', () => {
-  const cur = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--root-font')) || 16;
-  const next = Math.min(22, cur + 1);
-  document.documentElement.style.setProperty('--root-font', next + 'px');
-  localStorage.setItem('saarthi-font-size', next);
-});
-
-document.getElementById('decreaseFont').addEventListener('click', () => {
-  const cur = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--root-font')) || 16;
-  const next = Math.max(12, cur - 1);
-  document.documentElement.style.setProperty('--root-font', next + 'px');
-  localStorage.setItem('saarthi-font-size', next);
-});
-
-
-renderGrid();
 </script>
+
+ <script>
+    function updateFont(px) {
+      document.documentElement.style.setProperty('--root-font', px + 'px');
+      localStorage.setItem('saarthi-font-size', px);
+      document.getElementById('fontSlider').value = Math.round((px / 16) * 100);
+    }
+
+    /* Load saved font size */
+    const savedFont = localStorage.getItem('saarthi-font-size');
+    if (savedFont) updateFont(parseInt(savedFont));
+
+    /* A+ */
+    document.getElementById('increaseFont').addEventListener('click', () => {
+      const cur = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--root-font'));
+      updateFont(Math.min(24, cur + 1));
+    });
+
+    /* A- */
+    document.getElementById('decreaseFont').addEventListener('click', () => {
+      const cur = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--root-font'));
+      updateFont(Math.max(12, cur - 1));
+    });
+
+    /* Slider */
+    document.getElementById('fontSlider').addEventListener('input', (e) => {
+      updateFont(Math.round((parseInt(e.target.value) / 100) * 16));
+    });
+
+    /* Contrast toggle */
+    document.getElementById('accessibleToggle').addEventListener('click', () => {
+      document.body.classList.toggle('accessible');
+      localStorage.setItem('saarthi-contrast', document.body.classList.contains('accessible') ? 'on' : 'off');
+    });
+
+    /* Load saved contrast */
+    if (localStorage.getItem('saarthi-contrast') === 'on') {
+      document.body.classList.add('accessible');
+    }
+  </script>
+
 <footer style="background:#fff; padding:24px; border-top:1px solid #ddd; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:20px; font-family:'Open Sans',sans-serif; font-size:0.95rem; color:#212121;">
   <div>
     <h3 style="font-family:'Montserrat',sans-serif; font-size:1.1rem; color:#1E88E5; margin:0 0 8px 0;">Organisation</h3>
@@ -261,177 +387,5 @@ renderGrid();
   </div>
 </footer>
 
-<!-- Mode Selection + Guided Listening Mode -->
-<script>
-(function() {
-    let blindnessMode = false;
-    let speechUnlocked = false;
-    let inSelectionScreen = true;
-    let focusIndex = 0;
-    let focusableSequence = [];
-
-    function styleButton(btn, bg, text = '#fff') {
-        btn.style.backgroundColor = bg;
-        btn.style.color = text;
-        btn.style.padding = '15px 30px';
-        btn.style.margin = '10px';
-        btn.style.fontSize = '1.2rem';
-        btn.style.border = 'none';
-        btn.style.borderRadius = '8px';
-        btn.style.cursor = 'pointer';
-    }
-
-    function speak(text) {
-        if (!text.trim()) return;
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel();
-            const utter = new SpeechSynthesisUtterance(text);
-            utter.rate = 1;
-            utter.pitch = 1;
-            speechSynthesis.speak(utter);
-        }
-    }
-
-    // Overlay
-    const overlay = document.createElement('div');
-    overlay.style.position = 'fixed';
-    overlay.style.top = '0';
-    overlay.style.left = '0';
-    overlay.style.width = '100%';
-    overlay.style.height = '100%';
-    overlay.style.backgroundColor = '#232444';
-    overlay.style.color = '#fff';
-    overlay.style.display = 'flex';
-    overlay.style.flexDirection = 'column';
-    overlay.style.justifyContent = 'center';
-    overlay.style.alignItems = 'center';
-    overlay.style.zIndex = '10000';
-
-    const heading = document.createElement('h1');
-    heading.innerText = 'Choose Your Mode';
-    heading.style.fontSize = '2rem';
-    heading.style.marginBottom = '20px';
-    heading.style.textAlign = 'center';
-
-    const btnReadable = document.createElement('button');
-    btnReadable.innerText = 'Readable Mode';
-    btnReadable.setAttribute('aria-label', 'Readable Mode');
-    styleButton(btnReadable, '#5457e2');
-
-    const btnListening = document.createElement('button');
-    btnListening.innerText = 'Listening Mode';
-    btnListening.setAttribute('aria-label', 'Listening Mode');
-    styleButton(btnListening, '#ffd600', '#232444');
-
-    overlay.appendChild(heading);
-    overlay.appendChild(btnReadable);
-    overlay.appendChild(btnListening);
-    document.body.appendChild(overlay);
-
-    const buttons = [btnReadable, btnListening];
-
-    // Unlock speech
-    function unlockSpeech() {
-        if (!speechUnlocked) {
-            speechUnlocked = true;
-            speak("Choose a mode to navigate further: Readable Mode. Listening Mode.");
-            focusIndex = 0;
-            buttons[focusIndex].focus();
-            speak(buttons[focusIndex].getAttribute('aria-label'));
-        }
-    }
-    document.addEventListener('keydown', unlockSpeech, { once: true });
-    document.addEventListener('click', unlockSpeech, { once: true });
-
-    // Mode selection screen Tab lock
-    document.addEventListener('keydown', e => {
-        if (inSelectionScreen && e.key === 'Tab') {
-            e.preventDefault();
-            focusIndex = (focusIndex + 1) % buttons.length;
-            buttons[focusIndex].focus();
-            speak(buttons[focusIndex].getAttribute('aria-label'));
-        }
-        else if (inSelectionScreen && e.key === 'Enter' && document.activeElement.tagName === 'BUTTON') {
-            if (document.activeElement === btnReadable) {
-                blindnessMode = false;
-                inSelectionScreen = false;
-                overlay.remove();
-            } else if (document.activeElement === btnListening) {
-                blindnessMode = true;
-                inSelectionScreen = false;
-                overlay.remove();
-                setupListeningSequence();
-                speak("Listening mode enabled. Use Tab to move forward and Enter to activate links or buttons.");
-            }
-        }
-    });
-
-    // Build custom sequence for Listening Mode
-    function setupListeningSequence() {
-        const selectors = [
-            'header nav a',
-            'h1','h2','h3','h4','h5','h6',
-            'p',
-            'button',
-            'img',
-            '.feature-box',
-            '.faq-question',
-            '.faq-answer'
-        ];
-        focusableSequence = Array.from(document.querySelectorAll(selectors.join(',')))
-            .filter(el => el.offsetParent !== null) // visible
-            .map(el => {
-                el.setAttribute('tabindex', '0');
-                return el;
-            });
-        focusIndex = 0;
-        focusableSequence[0].focus();
-        speakElement(focusableSequence[0]);
-    }
-
-    function speakElement(el) {
-        let text = el.getAttribute('aria-label') || el.alt || el.innerText || el.placeholder || '';
-        speak(text);
-    }
-
-    // Custom Tab navigation in Listening Mode
-    document.addEventListener('keydown', e => {
-        if (!inSelectionScreen && blindnessMode && e.key === 'Tab') {
-            e.preventDefault();
-            focusIndex = (focusIndex + 1) % focusableSequence.length;
-            focusableSequence[focusIndex].focus();
-            speakElement(focusableSequence[focusIndex]);
-        }
-    });
-
-    // Mouse fallback
-    btnReadable.addEventListener('click', () => {
-        blindnessMode = false;
-        inSelectionScreen = false;
-        overlay.remove();
-    });
-
-    btnListening.addEventListener('click', () => {
-        blindnessMode = true;
-        inSelectionScreen = false;
-        overlay.remove();
-        setupListeningSequence();
-        speak("Listening mode enabled. Use Tab to move forward and Enter to activate links or buttons.");
-    });
-
-    // Enter key activation in Listening Mode
-    document.addEventListener('keydown', e => {
-        if (!inSelectionScreen && blindnessMode && e.key === 'Enter') {
-            const el = focusableSequence[focusIndex];
-            if (el.tagName === 'A' || el.tagName === 'BUTTON') {
-                el.click();
-            }
-        }
-    });
-
-})();
-</script>
-  
 </body>
 </html>
-
