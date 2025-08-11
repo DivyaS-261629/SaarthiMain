@@ -91,7 +91,7 @@
     .estimate strong { font-size: 1.1rem; }
     .note { font-size: 0.85rem; color: hsl(var(--text-muted)); }
 
-    
+    /* Stats */
     .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
     @media (min-width: 720px) { .stats { grid-template-columns: repeat(4, 1fr); } }
     .stat { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 18px; text-align: center; box-shadow: var(--shadow-2); }
@@ -115,35 +115,22 @@
     ]
   }
   </script>
-<link rel="stylesheet" href="commonstyles.css">
-<script src="header.js" defer></script>
-
-
 </head>
+
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
 
-
-
-<header>
-
-  <div class="brand">Saarthi</div>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="About us.html">About us</a>
-    <a href="finder acha wala.html">School &amp; Therapist Finder</a>
-    <a href="r6.html"  >Resources</a>
-    <a href="Community forum.html">Community</a>
-    <a href="Careers.html" aria-current="page"> Career</a>
-    <a href="Contact us.html"> Contact us</a>
-  </nav>
-  <div class="controls">
-    <button id="decreaseFont" class="ctrl-btn">A-</button>
-    <input id="fontSlider" type="range" min="75" max="150" value="100" class="font-slider" title="Font size percentage">
-    <button id="increaseFont" class="ctrl-btn">A+</button>
-    <button id="accessibleToggle" class="ctrl-btn">CONTRAST</button>
-<button id="screenReaderBtn">🔊 Read Aloud</button>
-  </div>
-</header>
+  <header class="hero" role="banner">
+    <div class="hero-inner container">
+      <span class="badge" aria-label="Accessible by design">✨ Community‑first. Accessible by design.</span>
+      <h1>Saarthi – Career & Skill Hub for Caregivers</h1>
+      <p class="lead">Join Saarthi and support individuals with special needs. Create your profile, verify skills, and connect with local opportunities.</p>
+      <div style="display:flex; gap:10px; justify-content:center; margin-top:10px;">
+        <button id="startOnboardingBtn" class="btn btn-lg btn-hero" aria-label="Start Onboarding">Start Onboarding</button>
+        <a href="#how" class="btn btn-lg btn-cta" aria-label="How it works">How it works</a>
+      </div>
+    </div>
+  </header>
 
   <main id="main" tabindex="-1">
     <!-- How it works -->
@@ -204,6 +191,23 @@
           <p style="font-size:1.05rem; margin:0 0 8px">“Saarthi helped me find nearby families that matched my skills. The process was clear, respectful, and fast.”</p>
           <footer class="muted">— Asha, Caregiver (3+ years experience)</footer>
         </blockquote>
+        <div class="grid" role="list" style="margin-top:14px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px;">
+          <article class="card" role="listitem">
+            <img src="/images/caregiver-story-1.jpg" alt="Caregiver Meera supporting a child at home" loading="lazy">
+            <h3>Meera, Mumbai</h3>
+            <p class="muted">After completing a short skills refresher, Meera started with weekend respite care. Today she supports a teenager with autism with life-skills training while pursuing her diploma.</p>
+          </article>
+          <article class="card" role="listitem">
+            <img src="/images/caregiver-story-2.jpg" alt="Caregiver Arjun accompanying an elder to a clinic" loading="lazy">
+            <h3>Arjun, Bengaluru</h3>
+            <p class="muted">Arjun switched from retail to caregiving, supporting elders with mobility challenges. Saarthi’s matches near his home helped him balance family time and work.</p>
+          </article>
+          <article class="card" role="listitem">
+            <img src="/images/caregiver-story-3.jpg" alt="Caregiver Lata reading with a young child" loading="lazy">
+            <h3>Lata, Delhi</h3>
+            <p class="muted">With guidance from our community, Lata now supports a 6‑year‑old with Down syndrome, focusing on communication and play. The family calls her their “third parent”.</p>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -237,39 +241,52 @@
       <div class="container">
         <h2 id="onboarding-title">Start Onboarding</h2>
         <form id="onboardingForm" class="form" novalidate>
+          <div id="formSummary" class="card" role="alert" aria-live="polite" tabindex="-1" style="display:none"></div>
+
           <div class="row row-2">
             <div>
               <label for="fullName">Full name</label>
-              <input id="fullName" name="fullName" type="text" autocomplete="name" required />
+              <input id="fullName" name="fullName" type="text" autocomplete="name" required placeholder="e.g., Meera Sharma" title="Enter your full legal name" aria-describedby="fullName-help fullName-error" />
+              <p id="fullName-help" class="help">Use your full legal name.</p>
+              <p id="fullName-error" style="display:none" aria-live="polite"></p>
             </div>
             <div>
               <label for="phone">Phone</label>
-              <input id="phone" name="phone" type="tel" autocomplete="tel" required />
+              <input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="e.g., 9876543210" title="Enter a 10-digit Indian mobile number" aria-describedby="phone-help phone-error" />
+              <p id="phone-help" class="help">10-digit Indian mobile number. You may type digits only; formatting will be added automatically.</p>
+              <p id="phone-error" style="display:none" aria-live="polite"></p>
             </div>
           </div>
+
           <div class="row row-2">
             <div>
               <label for="email">Email</label>
-              <input id="email" name="email" type="email" autocomplete="email" required />
+              <input id="email" name="email" type="email" autocomplete="email" required placeholder="e.g., you@example.com" title="Use a valid email like name@example.com" aria-describedby="email-help email-error" />
+              <p id="email-help" class="help">Use a valid email (name@example.com).</p>
+              <p id="email-error" style="display:none" aria-live="polite"></p>
             </div>
             <div>
               <label for="experience">Years of experience</label>
-              <select id="experience" name="experience" required>
+              <select id="experience" name="experience" required aria-describedby="experience-help experience-error" title="Select your total years of caregiving experience">
                 <option value="0-1">0–1 years</option>
                 <option value="2-4">2–4 years</option>
                 <option value="5+">5+ years</option>
               </select>
+              <p id="experience-help" class="help">Choose your total years of experience.</p>
+              <p id="experience-error" style="display:none" aria-live="polite"></p>
             </div>
           </div>
 
           <div class="row row-3">
             <div>
               <label for="city">City</label>
-              <input id="city" name="city" type="text" required />
+              <input id="city" name="city" type="text" required placeholder="e.g., Pune" title="City where you can work" aria-describedby="city-help city-error" />
+              <p id="city-help" class="help">Enter the city where you can work.</p>
+              <p id="city-error" style="display:none" aria-live="polite"></p>
             </div>
             <div>
               <label for="state">State</label>
-              <select id="state" name="state" required>
+              <select id="state" name="state" required aria-describedby="state-help state-error" title="Select your state">
                 <option value="">Select state…</option>
                 <option>Maharashtra</option>
                 <option>Delhi</option>
@@ -282,14 +299,18 @@
                 <option>Rajasthan</option>
                 <option>Punjab</option>
               </select>
+              <p id="state-help" class="help">Select the state for better matching.</p>
+              <p id="state-error" style="display:none" aria-live="polite"></p>
             </div>
             <div>
               <label for="availability">Availability</label>
-              <select id="availability" name="availability" required>
+              <select id="availability" name="availability" required aria-describedby="availability-help availability-error" title="Choose when you are available">
                 <option>Full-time</option>
                 <option>Part-time</option>
                 <option>On-call</option>
               </select>
+              <p id="availability-help" class="help">Pick the option that best fits your schedule.</p>
+              <p id="availability-error" style="display:none" aria-live="polite"></p>
             </div>
           </div>
 
@@ -311,17 +332,20 @@
           <div class="row row-2">
             <div>
               <label for="languages">Languages</label>
-              <input id="languages" name="languages" type="text" placeholder="e.g., English, Hindi" />
+              <input id="languages" name="languages" type="text" placeholder="e.g., English, Hindi" title="List the languages you speak" aria-describedby="languages-help" />
+              <p id="languages-help" class="help">Comma-separated list (optional).</p>
             </div>
             <div>
-              <label for="certificates">Certificates (optional)</label>
-              <input id="certificates" name="certificates" type="text" placeholder="List certificate names" />
+              <label for="certFiles">Certificates (optional)</label>
+              <input id="certFiles" name="certFiles" type="file" multiple accept=".pdf,.jpg,.jpeg,.png" title="Upload training/verification certificates (PDF/JPG/PNG)" aria-describedby="certFiles-help certFiles-error" />
+              <p id="certFiles-help" class="help">Upload up to 5 files (PDF/JPG/PNG). Optional.</p>
+              <p id="certFiles-error" style="display:none" aria-live="polite"></p>
             </div>
           </div>
 
           <div>
             <label for="referrals">Referrals from previous employers (optional)</label>
-            <textarea id="referrals" name="referrals" placeholder="Add referral contact or note"></textarea>
+            <textarea id="referrals" name="referrals" placeholder="Add referral contact or note" title="You can share names or contacts of people who can speak about your work"></textarea>
           </div>
 
           <div class="estimate" aria-live="polite" aria-atomic="true">
@@ -334,27 +358,22 @@
           </div>
 
           <p id="confirmation" class="card" style="display:none" role="status">
-            Thank you for submitting your details. We will contact you once a family wants to interview you.
+            Your submission has been recorded. We will contact you once a family wants to interview you.
           </p>
         </form>
       </div>
     </section>
   </main>
 
-<footer style="background:#fff; padding:24px; border-top:1px solid #ddd; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:20px; font-family:'Open Sans',sans-serif; font-size:0.95rem; color:#212121;">
-  <div>
-    <h3 style="font-family:'Montserrat',sans-serif; font-size:1.1rem; color:#1E88E5; margin:0 0 8px 0;">Organisation</h3>
-    <a href="about.html" style="text-decoration:none; color:#212121; margin-right:12px;">About Saarthi</a>
-    <a href="contact.html" style="text-decoration:none; color:#212121; margin-right:12px;">Contact Saarthi</a>
-    <a href="join.html" style="text-decoration:none; color:#1E88E5; font-weight:600;">Get Involved</a>
-  </div>
-  <div style="display:flex; gap:12px;">
-    <a href="https://facebook.com" target="_blank" style="background:#1877F2; color:#fff; padding:6px 10px; border-radius:6px; font-size:0.9rem; text-decoration:none;">FACEBOOK</a>
-    <a href="https://twitter.com" target="_blank" style="background:#000; color:#fff; padding:6px 10px; border-radius:6px; font-size:0.9rem; text-decoration:none;">X</a>
-    <a href="https://instagram.com" target="_blank" style="background:#E4405F; color:#fff; padding:6px 10px; border-radius:6px; font-size:0.9rem; text-decoration:none;">INSTAGRAM</a>
-  </div>
-</footer>
-
+  <footer class="footer-cta" role="contentinfo">
+    <div class="container" style="display:flex; flex-wrap:wrap; align-items:center; gap:14px; justify-content:space-between;">
+      <div>
+        <strong style="display:block; font-family:Montserrat,system-ui,sans-serif;">Ready to make a difference?</strong>
+        <span class="muted">Join thousands of caregivers building inclusive communities with Saarthi.</span>
+      </div>
+      <a href="#onboarding" class="btn btn-lg btn-hero">Start Onboarding</a>
+    </div>
+  </footer>
 
   <script>
     (function() {
@@ -362,6 +381,18 @@
       const wageOut = document.getElementById('wageOut');
       const form = document.getElementById('onboardingForm');
       const confirmation = document.getElementById('confirmation');
+      const formSummary = document.getElementById('formSummary');
+
+      const els = {
+        fullName: document.getElementById('fullName'),
+        phone: document.getElementById('phone'),
+        email: document.getElementById('email'),
+        experience: document.getElementById('experience'),
+        city: document.getElementById('city'),
+        state: document.getElementById('state'),
+        availability: document.getElementById('availability'),
+        certFiles: document.getElementById('certFiles')
+      };
 
       function formatINR(n) {
         try { return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(n); } catch (_) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
@@ -398,8 +429,8 @@
       }
 
       function calcWage() {
-        const state = document.getElementById('state').value;
-        const exp = document.getElementById('experience').value;
+        const state = els.state.value;
+        const exp = els.experience.value;
         const checks = Array.from(document.querySelectorAll('input[name="disabilities"]:checked')).map(c => c.value);
         if (!state) { wageOut.textContent = '—'; return; }
         const [baseMin, baseMax] = STATE_BASE[state] || [10000, 15000];
@@ -413,174 +444,119 @@
       // Smooth scroll to form
       startBtn?.addEventListener('click', function() {
         document.getElementById('onboarding').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        document.getElementById('fullName')?.focus({ preventScroll: true });
+        els.fullName?.focus({ preventScroll: true });
       });
 
       // Reactive wage updates
       ['state','experience'].forEach(id => document.getElementById(id).addEventListener('change', calcWage));
       document.querySelectorAll('input[name="disabilities"]').forEach(cb => cb.addEventListener('change', calcWage));
-
-      // Initial compute
       calcWage();
+
+      // ---------------- Validation helpers ----------------
+      function showError(input, errorId, message) {
+        const el = document.getElementById(errorId);
+        if (el) { el.textContent = message; el.style.display = 'block'; }
+        input.setAttribute('aria-invalid', 'true');
+      }
+      function clearError(input, errorId) {
+        const el = document.getElementById(errorId);
+        if (el) { el.textContent = ''; el.style.display = 'none'; }
+        input.setAttribute('aria-invalid', 'false');
+      }
+
+      function validateName() {
+        const v = els.fullName.value.trim();
+        if (!v) { showError(els.fullName, 'fullName-error', 'Full name is required.'); return 'Full name is required.'; }
+        clearError(els.fullName, 'fullName-error'); return null;
+      }
+
+      function formatPhoneMask(value) {
+        const digits = value.replace(/\D/g, '').slice(0, 10);
+        return digits.length > 5 ? `${digits.slice(0,5)} ${digits.slice(5)}` : digits;
+      }
+      els.phone.addEventListener('input', () => { els.phone.value = formatPhoneMask(els.phone.value); });
+
+      function validatePhone() {
+        const digits = els.phone.value.replace(/\D/g, '');
+        if (!digits) { showError(els.phone, 'phone-error', 'Phone number is required.'); return 'Phone number is required.'; }
+        if (!/^\d{10}$/.test(digits)) { showError(els.phone, 'phone-error', 'Enter a 10-digit Indian mobile number (e.g., 9876543210).'); return 'Invalid phone number'; }
+        clearError(els.phone, 'phone-error'); return null;
+      }
+
+      function validateEmail() {
+        const v = els.email.value.trim();
+        if (!v) { showError(els.email, 'email-error', 'Email is required.'); return 'Email is required.'; }
+        // Use browser validation first
+        if (els.email.validity.typeMismatch) { showError(els.email, 'email-error', 'Enter a valid email (e.g., name@example.com).'); return 'Invalid email'; }
+        clearError(els.email, 'email-error'); return null;
+      }
+
+      function validateRequiredSelect(el, errorId, label) {
+        if (!el.value) { showError(el, errorId, `${label} is required.`); return `${label} is required.`; }
+        clearError(el, errorId); return null;
+      }
+
+      function validateCity() {
+        const v = els.city.value.trim();
+        if (!v) { showError(els.city, 'city-error', 'City is required.'); return 'City is required.'; }
+        clearError(els.city, 'city-error'); return null;
+      }
+
+      function validateFiles() {
+        const files = els.certFiles.files;
+        if (!files || files.length === 0) { clearError(els.certFiles, 'certFiles-error'); return null; }
+        if (files.length > 5) { showError(els.certFiles, 'certFiles-error', 'Please upload a maximum of 5 files.'); return 'Too many files'; }
+        const allowed = ['application/pdf','image/jpeg','image/png'];
+        for (const f of files) {
+          if (!allowed.includes(f.type)) { showError(els.certFiles, 'certFiles-error', 'Only PDF, JPG or PNG files are allowed.'); return 'Invalid file type'; }
+        }
+        clearError(els.certFiles, 'certFiles-error'); return null;
+      }
+
+      // Field-level validation on blur/change
+      els.fullName.addEventListener('blur', validateName);
+      els.phone.addEventListener('blur', validatePhone);
+      els.email.addEventListener('blur', validateEmail);
+      els.city.addEventListener('blur', validateCity);
+      els.state.addEventListener('change', () => validateRequiredSelect(els.state, 'state-error', 'State'));
+      els.experience.addEventListener('change', () => validateRequiredSelect(els.experience, 'experience-error', 'Experience'));
+      els.availability.addEventListener('change', () => validateRequiredSelect(els.availability, 'availability-error', 'Availability'));
+      els.certFiles.addEventListener('change', validateFiles);
+
+      function validateForm() {
+        const errors = [];
+        const e1 = validateName(); if (e1) errors.push({ field: 'fullName', message: e1 });
+        const e2 = validatePhone(); if (e2) errors.push({ field: 'phone', message: e2 });
+        const e3 = validateEmail(); if (e3) errors.push({ field: 'email', message: e3 });
+        const e4 = validateRequiredSelect(els.experience, 'experience-error', 'Experience'); if (e4) errors.push({ field: 'experience', message: e4 });
+        const e5 = validateCity(); if (e5) errors.push({ field: 'city', message: e5 });
+        const e6 = validateRequiredSelect(els.state, 'state-error', 'State'); if (e6) errors.push({ field: 'state', message: e6 });
+        const e7 = validateRequiredSelect(els.availability, 'availability-error', 'Availability'); if (e7) errors.push({ field: 'availability', message: e7 });
+        const e8 = validateFiles(); if (e8) errors.push({ field: 'certFiles', message: e8 });
+        return errors;
+      }
+
+      function showSummary(errors) {
+        if (!errors.length) { formSummary.style.display = 'none'; formSummary.textContent = ''; return; }
+        const items = errors.map(e => `<li><a href="#${e.field}">${e.message}</a></li>`).join('');
+        formSummary.innerHTML = `<strong>Please fix the following:</strong><ul>${items}</ul>`;
+        formSummary.style.display = 'block';
+        formSummary.focus();
+      }
 
       // Form submit
       form.addEventListener('submit', function(e) {
         e.preventDefault();
-        // Basic client-side validation
-        const requiredIds = ['fullName','phone','email','experience','state','availability','city'];
-        const missing = requiredIds.filter(id => !document.getElementById(id).value);
-        if (missing.length) {
-          alert('Please fill all required fields.');
-          return;
-        }
+        const errors = validateForm();
+        if (errors.length) { showSummary(errors); return; }
+        showSummary([]);
         confirmation.style.display = 'block';
+        confirmation.textContent = 'Your submission has been recorded. We will contact you once a family wants to interview you.';
         confirmation.focus();
         form.reset();
         calcWage();
       });
     })();
-
-
   </script>
-
-<script>
-/* Robust Read-Aloud (SpeechSynthesis) — paste before </body> or in external .js (defer) */
-(function(){
-  // IDs we might have used — script will attach to first match.
-  const ids = ['screenreader-toggle','screenReaderBtn','screenReaderBtnAlt','screenReaderPlayBtn','screenReaderBtn'];
-  let btn = ids.map(id => document.getElementById(id)).find(Boolean);
-
-  // fallback: create a small floating button if none exists
-  if(!btn){
-    btn = document.createElement('button');
-    btn.id = 'screenReaderBtn';
-    btn.textContent = '🔊 Read Aloud';
-    btn.style.cssText = 'position:fixed;right:18px;bottom:18px;z-index:9999;padding:10px 12px;border-radius:8px;';
-    document.body.appendChild(btn);
-  }
-
-  // Utility: get main readable text (prefer <main> / role=main / article)
-  function getMainText(){
-    const root = document.querySelector('main') || document.querySelector('[role="main"]') || document.querySelector('article') || document.body;
-    const clone = root.cloneNode(true);
-
-    // remove elements we don't want read
-    clone.querySelectorAll('nav, header, footer, script, style, noscript, [aria-hidden="true"], [hidden]').forEach(n=>n.remove());
-
-    // gather visible text nodes
-    const walker = document.createTreeWalker(clone, NodeFilter.SHOW_TEXT);
-    let text = '', node;
-    while(node = walker.nextNode()){
-      const t = node.textContent.trim();
-      if(t) text += t + ' ';
-    }
-    return text.replace(/\s+/g,' ').trim();
-  }
-
-  // split to sentence-aware chunks (maxChars safe for browsers)
-  function splitToChunks(text, maxChars=1600){
-    if(!text) return [];
-    const sentences = text.match(/[^.!?]+[.!?]*[\s\n]*/g) || [text];
-    const chunks = [];
-    let cur = '';
-    for(const s of sentences){
-      if((cur + ' ' + s).length <= maxChars){
-        cur = (cur ? cur + ' ' : '') + s;
-      } else {
-        if(cur) chunks.push(cur);
-        if(s.length > maxChars){
-          // break long sentence into slices
-          for(let i=0; i<s.length; i+=maxChars) chunks.push(s.slice(i,i+maxChars));
-          cur = '';
-        } else {
-          cur = s;
-        }
-      }
-    }
-    if(cur) chunks.push(cur);
-    return chunks;
-  }
-
-  let queue = [], currentUtterance = null;
-
-  function speakIndex(i){
-    if(i >= queue.length){
-      btn.setAttribute('aria-pressed','false');
-      btn.textContent = '🔊 Read Aloud';
-      return;
-    }
-    const u = new SpeechSynthesisUtterance(queue[i]);
-    currentUtterance = u;
-    u.lang = document.documentElement.lang || 'en-US';
-    u.rate = 1;
-    u.pitch = 1;
-    u.onend = () => {
-      currentUtterance = null;
-      speakIndex(i+1);
-    };
-    u.onerror = (e) => {
-      console.error('TTS error', e);
-      currentUtterance = null;
-      speakIndex(i+1);
-    };
-    window.speechSynthesis.speak(u);
-    btn.setAttribute('aria-pressed','true');
-    btn.textContent = '⏸️ Pause';
-  }
-
-  function startReading(){
-    if(!('speechSynthesis' in window)) { alert('Text-to-speech not supported in this browser.'); return; }
-    const text = getMainText();
-    if(!text){ alert('No readable text found on this page.'); return; }
-    queue = splitToChunks(text, 1600);
-    speakIndex(0);
-  }
-
-  function togglePlayPause(){
-    if(window.speechSynthesis.speaking){
-      if(window.speechSynthesis.paused){
-        window.speechSynthesis.resume();
-        btn.textContent = '⏸️ Pause';
-        btn.setAttribute('aria-pressed','true');
-      } else {
-        window.speechSynthesis.pause();
-        btn.textContent = '▶️ Resume';
-        btn.setAttribute('aria-pressed','false');
-      }
-      return;
-    }
-    // not speaking — start fresh
-    startReading();
-  }
-
-  function stopReading(){
-    window.speechSynthesis.cancel();
-    btn.setAttribute('aria-pressed','false');
-    btn.textContent = '🔊 Read Aloud';
-  }
-
-  // attach click: normal click = toggle play/pause; shift+click = stop
-  btn.addEventListener('click', function(e){
-    if(e.shiftKey){ stopReading(); return; }
-    togglePlayPause();
-  });
-
-  // pause when page hidden (optional)
-  document.addEventListener('visibilitychange', function(){
-    if(document.hidden && window.speechSynthesis.speaking && !window.speechSynthesis.paused){
-      window.speechSynthesis.pause();
-      btn.textContent = '▶️ Resume';
-      btn.setAttribute('aria-pressed','false');
-    }
-  });
-
-  // clean up on unload
-  window.addEventListener('beforeunload', ()=> window.speechSynthesis.cancel());
-})();
-</script>
-
-
 </body>
 </html>
-
-
