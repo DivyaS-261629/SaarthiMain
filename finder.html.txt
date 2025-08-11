@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+
+
+<header>
+  <div class="brand">
+    <img src="logo.png" alt="Saarthi Logo">
+    SAARTHI
+  </div>
+  <nav>
+    <a href="index.html" aria-current="page">Home</a>
+    <a href="about.html">About Us</a>
+    <a href="finder.html">School &amp; Therapist Finder</a>
+    <a href="resources.html">Resources</a>
+    <a href="community.html">Community</a>
+    <a href="career.html">Career</a>
+    <a href="contact.html">Contact Us</a>
+  </nav>
+  <div class="controls">
+    <button class="ctrl-btn" id="toggleContrast" aria-label="Toggle high contrast mode">🔳</button>
+    <button class="ctrl-btn" id="increaseFont" aria-label="Increase font size">A+</button>
+    <button class="ctrl-btn" id="decreaseFont" aria-label="Decrease font size">A−</button>
+  </div>
+</header>
+
+<body>
+
+
+<main>
+<div class="left-panel">
+  <h1>Therapist & School Finder</h1>
+
+  <form class="search-bar" onsubmit="return false;">
+    <div class="search-bar-row">
+      <label for="city">City:</label>
+      <input id="city" type="text" placeholder="Enter city...">
+      <label for="service">Service:</label>
+      <select id="service">
+        <option value="">Any</option>
+        <option value="therapist">Therapist</option>
+        <option value="school">School</option>
+      </select>
+    </div>
+    <div class="search-bar-row">
+      <label for="age">Age Group:</label>
+      <select id="age">
+        <option value="">Any</option>
+        <option value="children">Children</option>
+        <option value="adolescents">Adolescents</option>
+        <option value="adults">Adults</option>
+        <option value="elderly">Elderly</option>
+      </select>
+      <button type="button" id="searchBtn">Search</button>
+    </div>
+  </form>
+
+  <div class="profiles" id="profiles"></div>
+</div>
+
+<div class="right-panel">
+  <div id="map"></div>
+</div>
+<div id="sidePanel" aria-hidden="true"></div>
+<div class="overlay" id="overlay"></div>
+</main>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const data = [
+  { name:"Sunrise Therapy Center",type:"therapist",city:"Delhi",age:["children","adolescents"],badge:true,services:"Speech, Occupational, Behavioral Therapy",contacts:"+91 98765-43210",rating:"4.8",testimonials:"Exceptional support for kids. - Parent",lat:28.6139,lng:77.2090,extra:"Open Mon-Fri, 9am-6pm. Walk-ins welcome."},
+  { name:"Hope Inclusive School",type:"school",city:"Delhi",age:["children","adolescents"],badge:true,services:"Inclusive education, special needs support",contacts:"+91 89234-56780",rating:"4.5",testimonials:"Welcoming, accessible curriculum. - Therapist",lat:28.6042,lng:77.2201,extra:"Scholarships available. Special education experts on staff."},
+  { name:"Bright Path Therapists",type:"therapist",city:"Mumbai",age:["adults"],badge:true,services:"Physical, Occupational, Counseling",contacts:"+91 88888-33333",rating:"4.7",testimonials:"Professional, compassionate team. - Client",lat:19.0760,lng:72.8777,extra:"Accepts insurance. Teletherapy options available."}
+];
+
+let map, markersLayer;
+function initMap(){
+  map = L.map('map').setView([22.97,78.65],5);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+  markersLayer = L.layerGroup().addTo(map);
+}
+
+function handleEntitySelect(p){
+  openPanel(p);
+  map.setView([p.lat,p.lng],14);
+}
+
+function renderProfiles(profiles){
+  const cont = document.getElementById('profiles');
+  cont.innerHTML = '';
+  profiles.forEach(p=>{
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.tabIndex=0;
+    card.innerHTML = `<h3>${p.name}${p.badge?`<span class="badge">✓ Verified</span>`:''}</h3>
+      <div><b>Services:</b> ${p.services}</div>
+      <div><b>Contact:</b> ${p.contacts}</div>
+      <div><b>Rating:</b> ${p.rating} ★</div>
+      <div><em>${p.testimonials}</em></div>`;
+    card.onclick = ()=>handleEntitySelect(p);
+    card.addEventListener('keydown',(e)=>{if(e.key==="Enter"||e.key===" "){card.click();}});
+    cont.appendChild(card);
+  });
+}
+
+function updateMarkers(profiles){
+  markersLayer.clearLayers();
+  profiles.forEach(p=>{
+    const icon = L.divIcon({
+      html:`<div style="background:${getColor('--primary')};border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border:2px solid ${getColor('--accent')};color:white;font-size:16px;">📍</div>`,
+      className:"",iconSize:[24,24]
+    });
+    L.marker([p.lat,p.lng],{icon}).addTo(markersLayer)
+      .on('click',()=>handleEntitySelect(p));
+  });
+}
+
+function getColor(varName){
+  return getComputedStyle(document.body).getPropertyValue(varName).trim();
+}
+
+function openPanel(p){
+  const sp = document.getElementById('sidePanel');
+  sp.innerHTML = `<button class="close-btn" onclick="closePanel()" aria-label="Close">×</button>
+    <h3>${p.name}${p.badge?`<span class="badge">✓ Verified</span>`:''}</h3>
+    <div><b>Services:</b> ${p.services}</div>
+    <div><b>Contact:</b> ${p.contacts}</div>
+    <div><b>Rating:</b> ${p.rating} ★</div>
+    <div><em>${p.testimonials}</em></div>
+    <div style="margin-top: .7em;"><b>More Info:</b> ${p.extra||""}</div>`;
+  sp.setAttribute('aria-hidden','false');
+  document.getElementById('overlay').style.display='block';
+  sp.style.display="block";
+  trapFocus(sp);
+}
+
+function closePanel(){
+  const sp = document.getElementById('sidePanel');
+  sp.setAttribute('aria-hidden','true');
+  sp.style.display="none";
+  document.getElementById('overlay').style.display='none';
+  sp.innerHTML="";
+}
+
+function trapFocus(element){
+  const focusable = element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+  const firstEl = focusable[0];
+  const lastEl = focusable[focusable.length - 1];
+  element.addEventListener('keydown', function(e){
+    if(e.key==='Tab'){
+      if(e.shiftKey){ if(document.activeElement===firstEl){ e.preventDefault(); lastEl.focus(); } }
+      else { if(document.activeElement===lastEl){ e.preventDefault(); firstEl.focus(); } }
+    }
+    if(e.key==='Escape'){ closePanel(); }
+  });
+  if(firstEl) firstEl.focus();
+}
+
+function applyFilters(){
+  const city = document.getElementById('city').value.toLowerCase();
+  const service = document.getElementById('service').value;
+  const age = document.getElementById('age').value;
+  const filt = data.filter(p=>(!city||p.city.toLowerCase().includes(city)) && (!service||p.type===service) && (!age||p.age.includes(age)));
+  renderProfiles(filt);
+  updateMarkers(filt);
+  closePanel();
+}
+
+window.onload = ()=>{
+  initMap();
+  applyFilters();
+  document.getElementById('searchBtn').onclick = applyFilters;
+  document.getElementById('city').oninput = applyFilters;
+  document.getElementById('service').onchange = applyFilters;
+  document.getElementById('age').onchange = applyFilters;
+  document.getElementById('overlay').onclick = closePanel;
+
+  // Accessibility: Font & contrast controls
+  const FONT_KEY='fontSize', CONTRAST_KEY='contrastMode';
+  function applyPrefs(){
+    let f = localStorage.getItem(FONT_KEY) || 16;
+    document.documentElement.style.fontSize = f+'px';
+    document.body.classList.toggle('high-contrast', localStorage.getItem(CONTRAST_KEY)==='true');
+  }
+  applyPrefs();
+  document.getElementById('increaseFont').onclick=()=>{
+    let f = parseInt(getComputedStyle(document.documentElement).fontSize)+1;
+    if(f<=22){localStorage.setItem(FONT_KEY,f); applyPrefs();}
+  }
+  document.getElementById('decreaseFont').onclick=()=>{
+    let f = parseInt(getComputedStyle(document.documentElement).fontSize)-1;
+    if(f>=12){localStorage.setItem(FONT_KEY,f); applyPrefs();}
+  }
+  document.getElementById('contrastToggle').onclick=()=>{
+    let st = localStorage.getItem(CONTRAST_KEY)==='true' ? 'false':'true';
+    localStorage.setItem(CONTRAST_KEY,st); applyPrefs();
+  }
+};
+</script>
+</body>
+</html>

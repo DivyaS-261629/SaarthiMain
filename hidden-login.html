@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Administrator Login</h2>
+<form onsubmit="return checkLogin()">
+  Username: <input type="text" id="user"><br><br>
+  Password: <input type="password" id="pass"><br><br>
+  <input type="submit" value="Login">
+</form>
+<p id="msg" style="color:red;"></p>
+
+<script>
+function checkLogin(){
+  var u = document.getElementById("user").value;
+  var p = document.getElementById("pass").value;
+  if(u=="Saarthi@123" && p=="Panchayat"){
+    window.location.href="hidden.html";
+  } else {
+    document.getElementById("msg").innerHTML="Wrong credentials";
+window.location.href="home.html";
+  }
+  return false;
+}
+</script>
+</body>
+</html>

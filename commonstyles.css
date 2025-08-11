@@ -1,0 +1,93 @@
+:root {
+  --primary: #1E88E5;
+  --secondary: #4DB6AC;
+  --accent: #FFEB3B;
+  --accent-text: #001F54;
+  --bg: #F5F5F5;
+  --text: #212121;
+  --cta: #6A1B9A;
+  --error: #EF5350;
+  --accessible-bg: #2E2E2E;
+  --accessible-text: #E0E0E0;
+}
+
+/* Global reset and base text styles */
+html, body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Header styling */
+header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  background: #fff;
+  border-bottom: 2px solid var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  z-index: 1000;
+  flex-wrap: wrap;
+  min-height: 60px;
+}
+
+.brand {
+  font-family: 'Montserrat';
+  font-weight: 700;
+  color: var(--primary);
+  font-size: 1.25rem;
+}
+
+nav {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+nav a {
+  text-decoration: none;
+  color: var(--text);
+  padding: 6px 8px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+nav a[aria-current="page"] {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.controls {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ctrl-btn {
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 6px;
+  padding: 4px 8px;
+  cursor: pointer;
+}
+.font-slider {
+  width: 100px;
+}
+
+/* Accessibility mode */
+body.accessible {
+  background: var(--accessible-bg);
+  color: var(--accessible-text);
+}
+body.accessible header {
+  background: var(--accessible-bg);
+}
+body.accessible nav a {
+  color: var(--accessible-text);
+}
+body.accessible nav a[aria-current="page"] {
+  background: var(--accent);
+  color: var(--accent-text);
+}

@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Saarthi – Career & Skill Hub | Caregiver Onboarding</title>
+  <meta name="description" content="Join Saarthi as a caregiver. Tell us your location, skills, and experience. See estimated wages in INR. Benefits, testimonials, and our impact." />
+  <link rel="canonical" href="/saarthi-onepage.html" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Montserrat:wght@600;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      /* Brand palette (HSL for easy theming) */
+      --primary: 210 80% 45%;        /* Calm Blue */
+      --primary-contrast: 0 0% 100%; /* White */
+      --secondary: 170 60% 42%;      /* Soft Teal */
+      --accent: 45 95% 55%;          /* Warm Yellow */
+      --muted: 220 10% 45%;
+      --bg: 210 20% 98%;
+      --card: 0 0% 100%;
+      --border: 210 20% 90%;
+      --ring: var(--primary);
+
+      --text: 220 22% 12%;
+      --text-muted: 220 12% 40%;
+
+      --radius: 14px;
+
+      --shadow-1: 0 10px 30px -10px hsl(var(--primary) / 0.25);
+      --shadow-2: 0 8px 24px -12px hsl(var(--text) / 0.12);
+
+      --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(220 70% 55%));
+    }
+
+    /* Reset-ish */
+    *, *::before, *::after { box-sizing: border-box; }
+    html:focus-within { scroll-behavior: smooth; }
+    body { margin: 0; font-family: "Open Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; color: hsl(var(--text)); background: hsl(var(--bg)); line-height: 1.6; }
+    img { max-width: 100%; display: block; }
+    a { color: hsl(var(--primary)); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { width: min(1100px, 92vw); margin-inline: auto; }
+
+    /* Accessibility */
+    .skip-link { position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden; }
+    .skip-link:focus { position: static; width:auto; height:auto; padding: 0.5rem 0.75rem; background: hsl(var(--accent)); color: #000; border-radius: 8px; }
+    :focus-visible { outline: 3px solid hsl(var(--accent)); outline-offset: 3px; }
+
+    /* Header / Hero */
+    header.hero { position: relative; overflow: hidden; background: var(--gradient-primary); color: hsl(var(--primary-contrast)); }
+    .hero-inner { position: relative; padding: 96px 0; text-align: center; }
+    .badge { display:inline-flex; align-items:center; gap:8px; background: hsl(var(--card) / 0.12); border: 1px solid hsl(var(--card) / 0.2); color: hsl(var(--primary-contrast)); padding: 6px 10px; border-radius: 999px; font-size: 12px; }
+    h1 { font-family: Montserrat, system-ui, sans-serif; font-weight: 800; letter-spacing: -0.02em; font-size: clamp(1.9rem, 3.5vw + 1rem, 3.2rem); margin: 12px 0; }
+    .lead { font-size: clamp(1rem, 1.2vw + 0.8rem, 1.25rem); opacity: 0.95; margin: 0 auto 22px; max-width: 52ch; }
+
+    /* Buttons */
+    .btn { appearance: none; border: none; cursor: pointer; font-weight: 700; border-radius: 999px; padding: 12px 18px; transition: transform .12s ease, box-shadow .2s ease, background-color .2s ease; }
+    .btn:focus-visible { outline: 3px solid hsl(var(--accent)); outline-offset: 3px; }
+    .btn-hero { background: hsl(var(--accent)); color: #111; box-shadow: var(--shadow-1); }
+    .btn-hero:hover { transform: translateY(-1px); }
+    .btn-cta { background: hsl(var(--card) / 0.18); color: hsl(var(--primary-contrast)); border: 1px solid hsl(var(--card) / 0.28); }
+    .btn-cta:hover { transform: translateY(-1px); }
+    .btn-lg { padding: 14px 22px; font-size: 1rem; }
+
+    /* Sections */
+    section { padding: 48px 0; }
+    h2 { font-family: Montserrat, system-ui, sans-serif; font-weight: 700; letter-spacing: -0.01em; font-size: clamp(1.4rem, 1.8vw + 1rem, 2rem); margin: 0 0 18px; }
+    .grid { display: grid; gap: 16px; }
+    @media (min-width: 880px) { .grid-4 { grid-template-columns: repeat(4, minmax(0,1fr)); } .grid-2 { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+
+    .card { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: var(--radius); box-shadow: var(--shadow-2); padding: 18px; }
+    .card h3 { margin: 0 0 6px; font-size: 1.1rem; }
+    .muted { color: hsl(var(--text-muted)); }
+
+    /* Onboarding form */
+    .form { display: grid; gap: 14px; }
+    .row { display: grid; gap: 12px; }
+    @media (min-width: 720px) { .row-2 { grid-template-columns: 1fr 1fr; } .row-3 { grid-template-columns: repeat(3, 1fr); } }
+    label { font-weight: 600; font-size: 0.95rem; }
+    input[type="text"], input[type="email"], input[type="tel"], select, textarea { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid hsl(var(--border)); background: #fff; font: inherit; }
+    textarea { min-height: 96px; }
+    .help { font-size: 0.85rem; color: hsl(var(--text-muted)); }
+    .fieldset { border: 1px dashed hsl(var(--border)); padding: 14px; border-radius: 12px; }
+    .fieldset legend { padding: 0 6px; font-weight: 700; }
+
+    .estimate { background: hsl(var(--secondary) / 0.1); border: 1px solid hsl(var(--secondary) / 0.3); border-radius: 12px; padding: 14px; }
+    .estimate strong { font-size: 1.1rem; }
+    .note { font-size: 0.85rem; color: hsl(var(--text-muted)); }
+
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    @media (min-width: 720px) { .stats { grid-template-columns: repeat(4, 1fr); } }
+    .stat { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 18px; text-align: center; box-shadow: var(--shadow-2); }
+    .stat .num { font-family: Montserrat, system-ui, sans-serif; font-weight: 800; font-size: clamp(1.4rem, 2.5vw + 1rem, 2.2rem); }
+
+    /* Footer CTA */
+    .footer-cta { background: hsl(var(--secondary) / 0.08); border-top: 1px solid hsl(var(--border)); padding: 34px 0; }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "Saarthi Caregiver Onboarding",
+    "description": "How caregivers join Saarthi and start supporting families and organizations.",
+    "step": [
+      { "@type": "HowToStep", "name": "Tell us about you", "text": "Create your caregiver profile with experience, languages, and preferences." },
+      { "@type": "HowToStep", "name": "Verify & upskill", "text": "Upload documents for verification and access learning resources." },
+      { "@type": "HowToStep", "name": "Match & connect", "text": "Get geo-targeted matches with families, schools, NGOs, and therapists." },
+      { "@type": "HowToStep", "name": "Start supporting", "text": "Accept opportunities and manage engagements with built-in tools." }
+    ]
+  }
+  </script>
+<link rel="stylesheet" href="commonstyles.css">
+<script src="header.js" defer></script>
+
+
+</head>
+<body>
+
+
+
+<header>
+  <div class="brand">Saarthi</div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="About us.html">About us</a>
+    <a href="finder acha wala.html">School &amp; Therapist Finder</a>
+    <a href="r6.html"  >Resources</a>
+    <a href="Community forum.html">Community</a>
+    <a href="Careers.html" aria-current="page"> Career</a>
+    <a href="Contact us.html"> Contact us</a>
+  </nav>
+  <div class="controls">
+    <button id="decreaseFont" class="ctrl-btn">A-</button>
+    <input id="fontSlider" type="range" min="75" max="150" value="100" class="font-slider" title="Font size percentage">
+    <button id="increaseFont" class="ctrl-btn">A+</button>
+    <button id="accessibleToggle" class="ctrl-btn">CONTRAST</button>
+  </div>
+</header>
+
+  <main id="main" tabindex="-1">
+    <!-- How it works -->
+    <section id="how" aria-labelledby="how-title">
+      <div class="container">
+        <h2 id="how-title">How onboarding works</h2>
+        <div class="grid grid-4">
+          <article class="card" aria-label="Step 1">
+            <h3>1. Tell us about you</h3>
+            <p class="muted">Create your caregiver profile with experience, languages, and preferences.</p>
+          </article>
+          <article class="card" aria-label="Step 2">
+            <h3>2. Verify & upskill</h3>
+            <p class="muted">Upload certificates for verification and access learning resources.</p>
+          </article>
+          <article class="card" aria-label="Step 3">
+            <h3>3. Match & connect</h3>
+            <p class="muted">Get geo‑targeted matches with families, schools, NGOs, and therapists.</p>
+          </article>
+          <article class="card" aria-label="Step 4">
+            <h3>4. Start supporting</h3>
+            <p class="muted">Accept opportunities and manage engagements with built‑in tools.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits -->
+    <section aria-labelledby="benefits-title">
+      <div class="container">
+        <h2 id="benefits-title">Why caregivers choose Saarthi</h2>
+        <div class="grid grid-2">
+          <article class="card">
+            <h3>Flexible schedules</h3>
+            <p class="muted">Choose full‑time, part‑time, or on‑call roles that fit your life.</p>
+          </article>
+          <article class="card">
+            <h3>Fair, transparent pay</h3>
+            <p class="muted">See estimated wages upfront and get guidance on setting rates.</p>
+          </article>
+          <article class="card">
+            <h3>Training & upskilling</h3>
+            <p class="muted">Access curated resources to strengthen your skills and confidence.</p>
+          </article>
+          <article class="card">
+            <h3>Supportive community</h3>
+            <p class="muted">Connect with peers, mentors, and local organizations.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonial -->
+    <section aria-labelledby="testimonial-title">
+      <div class="container">
+        <h2 id="testimonial-title">Caregiver stories</h2>
+        <blockquote class="card" cite="#">
+          <p style="font-size:1.05rem; margin:0 0 8px">“Saarthi helped me find nearby families that matched my skills. The process was clear, respectful, and fast.”</p>
+          <footer class="muted">— Asha, Caregiver (3+ years experience)</footer>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- Impact Figures -->
+    <section aria-labelledby="impact-title">
+      <div class="container">
+        <h2 id="impact-title">Our impact</h2>
+        <div class="stats" role="list">
+          <div class="stat" role="listitem">
+            <div class="num">20+</div>
+            <div class="muted">States reached</div>
+          </div>
+          <div class="stat" role="listitem">
+            <div class="num">5,000+</div>
+            <div class="muted">Families connected</div>
+          </div>
+          <div class="stat" role="listitem">
+            <div class="num">1M+</div>
+            <div class="muted">Hours of care</div>
+          </div>
+          <div class="stat" role="listitem">
+            <div class="num">96%</div>
+            <div class="muted">Satisfaction rate</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Onboarding Form -->
+    <section id="onboarding" aria-labelledby="onboarding-title">
+      <div class="container">
+        <h2 id="onboarding-title">Start Onboarding</h2>
+        <form id="onboardingForm" class="form" novalidate>
+          <div class="row row-2">
+            <div>
+              <label for="fullName">Full name</label>
+              <input id="fullName" name="fullName" type="text" autocomplete="name" required />
+            </div>
+            <div>
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" required />
+            </div>
+          </div>
+          <div class="row row-2">
+            <div>
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div>
+              <label for="experience">Years of experience</label>
+              <select id="experience" name="experience" required>
+                <option value="0-1">0–1 years</option>
+                <option value="2-4">2–4 years</option>
+                <option value="5+">5+ years</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row row-3">
+            <div>
+              <label for="city">City</label>
+              <input id="city" name="city" type="text" required />
+            </div>
+            <div>
+              <label for="state">State</label>
+              <select id="state" name="state" required>
+                <option value="">Select state…</option>
+                <option>Maharashtra</option>
+                <option>Delhi</option>
+                <option>Karnataka</option>
+                <option>Uttar Pradesh</option>
+                <option>West Bengal</option>
+                <option>Gujarat</option>
+                <option>Tamil Nadu</option>
+                <option>Telangana</option>
+                <option>Rajasthan</option>
+                <option>Punjab</option>
+              </select>
+            </div>
+            <div>
+              <label for="availability">Availability</label>
+              <select id="availability" name="availability" required>
+                <option>Full-time</option>
+                <option>Part-time</option>
+                <option>On-call</option>
+              </select>
+            </div>
+          </div>
+
+          <fieldset class="fieldset">
+            <legend>Disabilities you can support</legend>
+            <div class="row row-3" role="group" aria-label="Disability types">
+              <label><input type="checkbox" name="disabilities" value="autism"> Autism</label>
+              <label><input type="checkbox" name="disabilities" value="adhd"> ADHD</label>
+              <label><input type="checkbox" name="disabilities" value="cerebral_palsy"> Cerebral Palsy</label>
+              <label><input type="checkbox" name="disabilities" value="down_syndrome"> Down Syndrome</label>
+              <label><input type="checkbox" name="disabilities" value="visual_impairment"> Visual Impairment</label>
+              <label><input type="checkbox" name="disabilities" value="hearing_impairment"> Hearing Impairment</label>
+              <label><input type="checkbox" name="disabilities" value="intellectual_disability"> Intellectual Disability</label>
+              <label><input type="checkbox" name="disabilities" value="learning_disability"> Learning Disability</label>
+            </div>
+            <p class="help">Select all that apply.</p>
+          </fieldset>
+
+          <div class="row row-2">
+            <div>
+              <label for="languages">Languages</label>
+              <input id="languages" name="languages" type="text" placeholder="e.g., English, Hindi" />
+            </div>
+            <div>
+              <label for="certificates">Certificates (optional)</label>
+              <input id="certificates" name="certificates" type="text" placeholder="List certificate names" />
+            </div>
+          </div>
+
+          <div>
+            <label for="referrals">Referrals from previous employers (optional)</label>
+            <textarea id="referrals" name="referrals" placeholder="Add referral contact or note"></textarea>
+          </div>
+
+          <div class="estimate" aria-live="polite" aria-atomic="true">
+            <div><strong>Estimated monthly wages (INR):</strong> <span id="wageOut">—</span></div>
+            <p class="note">This is an approximate estimate and may change based on agreement with the family.</p>
+          </div>
+
+          <div>
+            <button type="submit" class="btn btn-lg btn-hero" aria-label="Submit onboarding details">Submit</button>
+          </div>
+
+          <p id="confirmation" class="card" style="display:none" role="status">
+            Thank you for submitting your details. We will contact you once a family wants to interview you.
+          </p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer-cta" role="contentinfo">
+    <div class="container" style="display:flex; flex-wrap:wrap; align-items:center; gap:14px; justify-content:space-between;">
+      <div>
+        <strong style="display:block; font-family:Montserrat,system-ui,sans-serif;">Ready to make a difference?</strong>
+        <span class="muted">Join thousands of caregivers building inclusive communities with Saarthi.</span>
+      </div>
+      <a href="#onboarding" class="btn btn-lg btn-hero">Start Onboarding</a>
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const startBtn = document.getElementById('startOnboardingBtn');
+      const wageOut = document.getElementById('wageOut');
+      const form = document.getElementById('onboardingForm');
+      const confirmation = document.getElementById('confirmation');
+
+      function formatINR(n) {
+        try { return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(n); } catch (_) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
+      }
+
+      const STATE_BASE = {
+        'Maharashtra': [12000, 18000],
+        'Delhi': [13000, 20000],
+        'Karnataka': [12000, 18000],
+        'Uttar Pradesh': [9000, 14000],
+        'West Bengal': [10000, 15000],
+        'Gujarat': [11000, 16000],
+        'Tamil Nadu': [11000, 17000],
+        'Telangana': [12000, 18000],
+        'Rajasthan': [10000, 15000],
+        'Punjab': [11000, 16000]
+      };
+
+      const DISABILITY_MULT = {
+        autism: 1.20,
+        adhd: 1.10,
+        cerebral_palsy: 1.30,
+        down_syndrome: 1.15,
+        visual_impairment: 1.20,
+        hearing_impairment: 1.10,
+        intellectual_disability: 1.25,
+        learning_disability: 1.10
+      };
+
+      function expMult(value) {
+        if (value === '2-4') return 1.15;
+        if (value === '5+') return 1.30;
+        return 1.00;
+      }
+
+      function calcWage() {
+        const state = document.getElementById('state').value;
+        const exp = document.getElementById('experience').value;
+        const checks = Array.from(document.querySelectorAll('input[name="disabilities"]:checked')).map(c => c.value);
+        if (!state) { wageOut.textContent = '—'; return; }
+        const [baseMin, baseMax] = STATE_BASE[state] || [10000, 15000];
+        const multExp = expMult(exp);
+        const multDis = checks.length ? Math.max(...checks.map(v => DISABILITY_MULT[v] || 1)) : 1;
+        const min = Math.round((baseMin * multExp * multDis) / 100) * 100;
+        const max = Math.round((baseMax * multExp * multDis) / 100) * 100;
+        wageOut.textContent = `${formatINR(min)} – ${formatINR(max)}`;
+      }
+
+      // Smooth scroll to form
+      startBtn?.addEventListener('click', function() {
+        document.getElementById('onboarding').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById('fullName')?.focus({ preventScroll: true });
+      });
+
+      // Reactive wage updates
+      ['state','experience'].forEach(id => document.getElementById(id).addEventListener('change', calcWage));
+      document.querySelectorAll('input[name="disabilities"]').forEach(cb => cb.addEventListener('change', calcWage));
+
+      // Initial compute
+      calcWage();
+
+      // Form submit
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        // Basic client-side validation
+        const requiredIds = ['fullName','phone','email','experience','state','availability','city'];
+        const missing = requiredIds.filter(id => !document.getElementById(id).value);
+        if (missing.length) {
+          alert('Please fill all required fields.');
+          return;
+        }
+        confirmation.style.display = 'block';
+        confirmation.focus();
+        form.reset();
+        calcWage();
+      });
+    })();
+  </script>
+</body>
+</html>

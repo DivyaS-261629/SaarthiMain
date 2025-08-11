@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+
+
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Saarthi — Therapist & School Finder</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+:root {
+  --primary: #1E88E5;
+  --secondary: #4DB6AC;
+  --accent: #FFEB3B;
+  --accent-text: #001F54;
+  --bg: #F5F5F5;
+  --text: #212121;
+  --cta: #6A1B9A;
+  --error: #EF5350;
+  --accessible-bg: #2E2E2E;
+  --accessible-text: #E0E0E0;
+}
+
+
+html,body{margin:0;font-family:'Open Sans',sans-serif;font-size:16px;background:var(--bg);color:var(--text);} 
+header{position:fixed;top:0;left:0;right:0;background:#fff;border-bottom:2px solid var(--primary);display:flex;align-items:center;justify-content:space-between;padding:12px 18px;z-index:1000;flex-wrap:wrap;min-height:60px;}
+
+.brand{font-family:'Montserrat';font-weight:700;color:var(--primary);font-size:1.25rem;}
+nav{display:flex;gap:10px;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--text);padding:6px 8px;border-radius:6px;font-weight:600}
+nav a[aria-current="page"]{background:var(--accent);color:var(--accent-text)}
+.controls{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.ctrl-btn{border:1px solid #ccc;background:#fff;border-radius:6px;padding:4px 8px;cursor:pointer;}
+.font-slider{width:100px;}
+main{display:flex;gap:1rem;margin-top:100px;flex-wrap:wrap;padding:0 16px;max-width:1400px;margin-left:auto;margin-right:auto;}
+
+
+.left-panel{flex:1;min-width:300px;display:flex;flex-direction:column;gap:1rem}
+.right-panel{flex:2;min-width:400px;}
+.search-bar{background:var(--secondary);padding:1rem;border-radius:12px;border:2px solid var(--primary);color:#fff}
+.search-bar-row{display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.search-bar label{font-family:'Montserrat';font-weight:700;}
+.search-bar input,.search-bar select{flex:1;min-width:120px;padding:0.5rem;border-radius:8px;border:1px solid #ccc;}
+.search-bar button{background:var(--accent);color:var(--accent-text);border:none;border-radius:8px;padding:0.6rem 1.4rem;font-weight:700;cursor:pointer;}
+.profiles{display:flex;flex-direction:column;gap:0.8rem;}
+
+.card{background:#fff;border-left:6px solid var(--primary);border-radius:8px;padding:0.8rem;cursor:pointer;transition:background .16s;}
+
+.card:hover{background:#e0f7f5;}
+.badge{background:var(--accent);color:var(--accent-text);padding:2px 6px;border-radius:4px;font-size:0.85rem;font-weight:700;margin-left:6px;}
+#map{height:700px;border-radius:12px;border:2px solid var(--primary);}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:900;display:none;}
+#sidePanel{position:fixed;right:32px;top:120px;width:360px;max-width:90vw;background:var(--secondary);color:#fff;border-radius:10px;padding:1.2rem;box-shadow:0 0 30px rgba(0,0,0,0.2);border:2px solid var(--primary);z-index:1000;display:none;}
+.close-btn{position:absolute;top:10px;right:14px;background:none;border:none;color:#fff;font-size:1.5rem;cursor:pointer;}
+
+body.accessible{background:var(--accessible-bg);color:var(--accessible-text);}
+body.accessible header{background:var(--accessible-bg);}
+body.accessible nav a{color:var(--accessible-text)}
+body.accessible nav a[aria-current="page"]{background:var(--accent);color:var(--accent-text)}
+body.accessible .search-bar{background:var(--accessible-bg);color:var(--accessible-text);border-color:var(--accessible-text)}
+body.accessible .card{background:#3a3a3a;color:var(--accessible-text);}
+@media (max-width:768px){#sidePanel{position:static;width:100%;}}
+
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">Saarthi</div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="About us.html">About us</a>
+    <a href="finder acha wala.html" aria-current="page">School &amp; Therapist Finder</a>
+    <a href="r6.html">Resources</a>
+    <a href="Community forum.html">Community</a>
+    <a href="Careers.html"> Career</a>
+    <a href="Contact us.html"> Contact us</a>
+  </nav>
+  <div class="controls">
+    <button id="decreaseFont" class="ctrl-btn">A-</button>
+    <input id="fontSlider" type="range" min="75" max="150" value="100" class="font-slider" title="Font size percentage">
+    <button id="increaseFont" class="ctrl-btn">A+</button>
+    <button id="accessibleToggle" class="ctrl-btn">CONTRAST</button>
+  </div>
+</header>
+
+
+<main>
+  <div class="left-panel">
+    <h1>Therapist & School Finder</h1>
+    <form class="search-bar" onsubmit="return false;">
+      <div class="search-bar-row">
+        <label for="city">City:</label>
+        <input id="city" type="text" placeholder="Enter city...">
+        <label for="service">Service:</label>
+        <select id="service">
+          <option value="">Any</option>
+          <option value="therapist">Therapist</option>
+          <option value="school">School</option>
+        </select>
+      </div>
+      <div class="search-bar-row">
+        <label for="age">Age Group:</label>
+        <select id="age">
+          <option value="">Any</option>
+          <option value="children">Children</option>
+          <option value="adolescents">Adolescents</option>
+          <option value="adults">Adults</option>
+          <option value="elderly">Elderly</option>
+        </select>
+        <button type="button" id="searchBtn">Search</button>
+      </div>
+    </form>
+    <div id="profiles" class="profiles"></div>
+  </div>
+  <div class="right-panel">
+    <div id="map"></div>
+  </div>
+</main>
+<div id="overlay" class="overlay"></div>
+<div id="sidePanel"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const data=[
+  {name:"Sunrise Therapy Center",type:"therapist",city:"Delhi",address:"123 MG Road, Delhi",age:["children","adolescents"],badge:true,services:"Speech, Occupational, Behavioral Therapy",contacts:"+91 98765-43210",rating:"4.8",testimonials:"Exceptional support for kids. - Parent",specialities:"Autism, Speech Delay",reviews:["Amazing staff!","Helped my child improve greatly."],lat:28.6139,lng:77.2090,extra:"Open Mon-Fri, 9am-6pm."},
+  {name:"Hope Inclusive School",type:"school",city:"Delhi",address:"45 School Lane, Delhi",age:["children","adolescents"],badge:true,services:"Inclusive education, special needs support",contacts:"+91 89234-56780",rating:"4.5",testimonials:"Welcoming, accessible curriculum. - Therapist",specialities:"Inclusive Curriculum",reviews:["Teachers are very understanding."],lat:28.7041,lng:77.1025,extra:"Scholarships available."},
+  {name:"Mindful Steps Clinic",type:"therapist",city:"Bengaluru",address:"88 MG Road, Bengaluru",age:["adults"],badge:true,services:"Counseling, Cognitive Therapy",contacts:"+91 99887-66554",rating:"4.6",testimonials:"Life-changing guidance. - Client",specialities:"Anxiety, Depression",reviews:["Highly recommend for mental health."],lat:12.9716,lng:77.5946,extra:"Online sessions available."},
+  {name:"Care & Cure Rehab",type:"therapist",city:"Kolkata",address:"10 Park Street, Kolkata",age:["elderly"],badge:false,services:"Physical Rehabilitation",contacts:"+91 98712-34567",rating:"4.3",testimonials:"Friendly and professional. - Family",specialities:"Post-surgery Recovery",reviews:["Great for elderly care."],lat:22.5726,lng:88.3639,extra:"Home visits possible."},
+  {name:"Bright Minds School",type:"school",city:"Chennai",address:"56 Beach Road, Chennai",age:["children"],badge:true,services:"Inclusive education",contacts:"+91 91234-56789",rating:"4.7",testimonials:"Great environment for kids. - Parent",specialities:"Creative Learning",reviews:["My kid loves it here."],lat:13.0827,lng:80.2707,extra:"Modern facilities."}
+];
+let map,markersLayer;
+function initMap(){map=L.map('map').setView([22.97,78.65],5);L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);markersLayer=L.layerGroup().addTo(map);}
+function renderProfiles(profiles){const cont=document.getElementById('profiles');cont.innerHTML='';if(!profiles.length){cont.innerHTML='<div style="color:var(--error);font-weight:700;">No matching data found in our repository.</div>';return;}profiles.forEach(p=>{const card=document.createElement('div');card.className='card';card.innerHTML=`<h3>${p.name}${p.badge?`<span class='badge'>✓ Verified</span>`:''}</h3><div>${p.services}</div>`;card.onclick=()=>openPanel(p,true);cont.appendChild(card);});}
+function updateMarkers(profiles){markersLayer.clearLayers();profiles.forEach(p=>{const icon=L.divIcon({html:`<div style='background:${getComputedStyle(document.documentElement).getPropertyValue("--primary").trim()};border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;border:2px solid ${getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()};color:white;font-size:16px;'>📍</div>`,className:"",iconSize:[24,24]});L.marker([p.lat,p.lng],{icon}).addTo(markersLayer).on('click',()=>openPanel(p,true));});}
+function openPanel(p,zoom=false){const sp=document.getElementById('sidePanel');sp.innerHTML=`<button class='close-btn' onclick='closePanel()'>×</button><h3>${p.name}</h3><div><b>Address:</b> ${p.address}</div><div><b>Services:</b> ${p.services}</div><div><b>Contact:</b> ${p.contacts}</div><div><b>Rating:</b> ${p.rating} ★</div><div><b>Specialities:</b> ${p.specialities||''}</div><div><b>Testimonials:</b> ${p.testimonials}</div><div><b>Reviews:</b><ul>${(p.reviews||[]).map(r=>`<li>${r}</li>`).join('')}</ul></div><div><b>More Info:</b> ${p.extra}</div>`;sp.style.display='block';document.getElementById('overlay').style.display='block';if(zoom){map.setView([p.lat,p.lng],14);}}
+function closePanel(){document.getElementById('sidePanel').style.display='none';document.getElementById('overlay').style.display='none';}
+function applyFilters(){const city=document.getElementById('city').value.trim().toLowerCase();const service=document.getElementById('service').value;const age=document.getElementById('age').value;const filt=data.filter(p=>(!city||p.city.toLowerCase().includes(city))&&(!service||p.type===service)&&(!age||p.age.includes(age)));renderProfiles(filt);updateMarkers(filt);}
+function setFontSize(percent){document.documentElement.style.fontSize=(percent/100*16)+'px';}
+window.onload=()=>{
+  initMap();applyFilters();
+  document.getElementById('searchBtn').onclick=applyFilters;
+  document.getElementById('increaseFont').onclick=()=>{setFontSize((parseFloat(document.getElementById('fontSlider').value)+5));};
+  document.getElementById('decreaseFont').onclick=()=>{setFontSize((parseFloat(document.getElementById('fontSlider').value)-5));};
+  document.getElementById('fontSlider').oninput=(e)=>{setFontSize(parseFloat(e.target.value));};
+  document.getElementById('accessibleToggle').onclick=()=>{document.body.classList.toggle('accessible');};
+  document.getElementById('overlay').onclick=closePanel;
+};
+</script>
+</body>
+</html>

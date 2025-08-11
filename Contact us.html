@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contact Us | Saarthi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin=""/>
+  <style>
+    :root{
+      --primary:#1E88E5;
+      --secondary:#4DB6AC;
+      --accent:#FFEB3B;
+      --bg:#F5F5F5;
+      --text:#212121;
+    }
+    body{margin:0;background:var(--bg);color:var(--text);font-family:'Open Sans',sans-serif;}
+    header{position:fixed;top:0;left:0;right:0;background:white;box-shadow:0 2px 6px rgba(0,0,0,0.06);display:flex;align-items:center;justify-content:space-between;padding:12px 18px;z-index:1000}
+    nav a{padding:8px 10px;border-radius:6px;text-decoration:none;color:var(--text);font-weight:600}
+    main{max-width:1100px;margin:110px auto 60px;padding:18px}
+    .container {display:flex;flex-wrap:wrap;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,0.1);border-radius:8px;overflow:hidden;}
+    .contact-info, .contact-form {flex:1;padding:2rem;min-width:300px;}
+    form input, form textarea {width:100%;padding:0.75rem;margin-bottom:1rem;border:1px solid #ccc;border-radius:4px;}
+    form button {background-color:var(--primary);color:white;border:none;padding:0.75rem 1.5rem;border-radius:4px;cursor:pointer;}
+    form button:hover {background-color:#1565c0;}
+    #map {width:100%;height:300px;border-radius:6px;margin-top:1rem;}
+    @media (max-width:768px) {.container{flex-direction:column;}}
+  </style>
+
+<link rel="stylesheet" href="commonstyles.css">
+<script src="header.js" defer></script>
+
+
+</head>
+<body>
+
+
+
+<header>
+  <div class="brand">Saarthi</div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="About us.html">About us</a>
+    <a href="finder acha wala.html">School &amp; Therapist Finder</a>
+    <a href="r6.html" >Resources</a>
+    <a href="Community forum.html">Community</a>
+    <a href="Careers.html"> Career</a>
+    <a href="Contact us.html" aria-current="page"> Contact us</a>
+  </nav>
+  <div class="controls">
+    <button id="decreaseFont" class="ctrl-btn">A-</button>
+    <input id="fontSlider" type="range" min="75" max="150" value="100" class="font-slider" title="Font size percentage">
+    <button id="increaseFont" class="ctrl-btn">A+</button>
+    <button id="accessibleToggle" class="ctrl-btn">CONTRAST</button>
+  </div>
+</header>
+
+
+<main>
+  <h1 style="font-family:Montserrat,sans-serif;">Contact Us</h1>
+  <p>We’d love to hear from you. Reach out to Saarthi today!</p>
+  <div class="container">
+    <div class="contact-info">
+      <h2>Our Office</h2>
+      <p><strong>Address:</strong><br><a href="#map" style="color:var(--primary);text-decoration:underline;">123 NGO Street, Jaipur, Rajasthan, India</a></p>
+      <p><strong>Phone:</strong><br> +91-9876543210 (Call / WhatsApp)</p>
+      <p><strong>Email:</strong><br> contact@saarthi.org</p>
+      <p><strong>Office Hours:</strong><br> Mon - Fri: 9:00 AM - 6:00 PM</p>
+      <div id="map"></div>
+    </div>
+    <div class="contact-form">
+      <h2>Send Us a Message</h2>
+      <form id="contactForm">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="text" name="subject" placeholder="Subject">
+        <textarea name="message" placeholder="Your Message" rows="6" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+</main>
+<footer style="background:#fff; padding:24px; border-top:1px solid #ddd; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:20px; font-size:0.95rem; color:#212121;">
+  <div>
+    <h3 style="font-family:'Montserrat',sans-serif; font-size:1.1rem; color:#1E88E5; margin:0 0 8px 0;">Organisation</h3>
+    <a href="about.html" style="text-decoration:none; color:#212121; margin-right:12px;">About Saarthi</a>
+    <a href="contact.html" style="text-decoration:none; color:#212121; margin-right:12px;">Contact Saarthi</a>
+    <a href="join.html" style="text-decoration:none; color:#1E88E5; font-weight:600;">Get Involved</a>
+  </div>
+  <div style="display:flex; gap:12px;">
+    <a href="https://facebook.com" target="_blank" style="background:#1877F2; color:#fff; padding:6px 10px; border-radius:6px; font-size:0.9rem; text-decoration:none;">FACEBOOK</a>
+    <a href="https://twitter.com" target="_blank" style="background:#000; color:#fff; padding:6px 10px; border-radius:6px; font-size:0.9rem; text-decoration:none;">X</a>
+    <a href="https://instagram.com" target="_blank" style="background:#E4405F; color:#fff; padding:6px 10px; border-radius:6px; font-size:0.9rem; text-decoration:none;">INSTAGRAM</a>
+  </div>
+</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    alert('Thank you! Your message has been sent.');
+    this.reset();
+  });
+
+  // Initialize Leaflet map
+  var lat = 26.912433;
+  var lon = 75.787270;
+  var map = L.map('map').setView([lat, lon], 15);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  var blueIcon = L.divIcon({
+    className: '',
+    html: `<svg width="34" height="46" viewBox="0 0 34 46" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17 0C9.82 0 4 5.82 4 13c0 9.75 13 27 13 27s13-17.25 13-27c0-7.18-5.82-13-13-13z" fill="#1E88E5"/>
+      <circle cx="17" cy="13" r="5" fill="#fff"/>
+    </svg>` ,
+    iconSize: [34,46],
+    iconAnchor: [17,46],
+    popupAnchor: [0,-40]
+  });
+
+  var marker = L.marker([lat, lon], {icon: blueIcon}).addTo(map);
+  marker.bindPopup('<strong>Saarthi Office</strong><br>123 NGO Street<br>Jaipur, Rajasthan, India');
+
+  document.querySelector('.contact-info a[href="#map"]').addEventListener('click', function(e) {
+    e.preventDefault();
+    map.setView([lat, lon], 17);
+    marker.openPopup();
+    document.getElementById('map').scrollIntoView({behavior: 'smooth'});
+  });
+</script>
+</body>
+</html>

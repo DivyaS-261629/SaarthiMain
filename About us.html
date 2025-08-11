@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About Us | Saarthi – Care for Special Needs</title>
+  <meta name="description" content="Learn about Saarthi’s mission, vision, story, guiding principles, and leadership serving people of all age groups with special needs." />
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="canonical" href="about-us.html" />
+  <meta property="og:title" content="About Saarthi – Care for Special Needs" />
+  <meta property="og:description" content="Our mission, vision, story, principles, and leadership supporting families and individuals with special needs." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="about-us.html" />
+  <meta name="theme-color" content="#0ea5e9" />
+
+  <style>
+    :root {
+      /* Brand & semantic tokens (HSL) */
+      --background: 0 0% 100%;
+      --foreground: 224 71% 4%;
+      --muted: 220 14% 96%;
+      --muted-foreground: 215 16% 47%;
+      --primary: 201 89% 48%; /* cyan/sky */
+      --primary-foreground: 210 40% 98%;
+      --secondary: 221 39% 11%;
+      --secondary-foreground: 210 40% 98%;
+      --border: 214 32% 91%;
+      --card: 0 0% 100%;
+      --card-foreground: 224 71% 4%;
+
+      --radius: 14px;
+      --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.28);
+      --gradient-primary: linear-gradient(135deg, hsl(var(--primary) / 0.95), hsl(262 83% 58% / 0.95));
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: hsl(var(--foreground));
+      background: hsl(var(--background));
+      line-height: 1.6;
+    }
+
+ 
+    .container { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 1rem; }
+    .nav { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 0; }
+    .brand { font-weight: 800; font-size: 1.125rem; letter-spacing: -0.02em; text-decoration: none; color: hsl(var(--foreground)); }
+    .nav a { text-decoration: none; color: hsl(var(--foreground)); opacity: 0.9; }
+    .nav a:hover { opacity: 1; }
+    .nav-links { display: flex; gap: 1rem; align-items: center; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+      border-radius: calc(var(--radius) - 6px);
+      padding: .65rem 1rem; border: 1px solid hsl(var(--border));
+      background: hsl(var(--background)); color: hsl(var(--foreground));
+      transition: transform .12s ease, box-shadow .2s ease, background .2s ease;
+    }
+    .btn-primary {
+      background: var(--gradient-primary);
+      color: hsl(var(--primary-foreground)); border: 1px solid transparent;
+      box-shadow: var(--shadow-elegant);
+    }
+    .btn:hover { transform: translateY(-1px); }
+
+    .hero {
+      position: relative; overflow: hidden; isolation: isolate;
+      background: radial-gradient(80% 60% at 50% 0%, hsl(var(--muted)) 0%, hsl(var(--background)) 100%);
+      border-bottom: 1px solid hsl(var(--border));
+    }
+    .hero-inner { padding: 4rem 0 3rem; text-align: center; }
+    .eyebrow { display: inline-block; padding: .25rem .6rem; border-radius: 999px; border: 1px solid hsl(var(--border)); color: hsl(var(--muted-foreground)); font-size: .85rem; margin-bottom: .75rem; }
+    .hero h1 { font-size: clamp(1.8rem, 4.2vw, 3rem); line-height: 1.1; margin: 0 0 1rem; letter-spacing: -0.02em; }
+    .hero p { max-width: 780px; margin: 0 auto 1.25rem; color: hsl(var(--muted-foreground)); font-size: clamp(1rem, 2.2vw, 1.125rem); }
+
+    main { display: block; }
+    section { padding: 3rem 0; }
+    .section-title { font-size: clamp(1.3rem, 2.8vw, 1.75rem); margin: 0 0 1.25rem; }
+    .two-col { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+    @media (min-width: 900px) { .two-col { grid-template-columns: 1fr 1fr; gap: 2rem; } }
+
+    .card { background: hsl(var(--card)); border: 1px solid hsl(var(--border)); border-radius: var(--radius); padding: 1.2rem; box-shadow: 0 1px 0 hsl(var(--border)); }
+
+    .principles { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+    @media (min-width: 700px) { .principles { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .principles { grid-template-columns: repeat(3, 1fr); } }
+    .principle { padding: 1rem; border-radius: calc(var(--radius) - 6px); border: 1px dashed hsl(var(--border)); background: hsl(var(--muted)); }
+    .principle h4 { margin: 0 0 .4rem; font-size: 1rem; }
+    .principle p { margin: 0; color: hsl(var(--muted-foreground)); font-size: .95rem; }
+
+    .people-grid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 1rem; }
+    @media (min-width: 640px) { .people-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (min-width: 1024px) { .people-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+    .person { display: grid; grid-template-columns: 84px 1fr; gap: 1rem; align-items: center; padding: 1rem; border: 1px solid hsl(var(--border)); border-radius: calc(var(--radius) - 6px); background: hsl(var(--card)); }
+    .avatar { width: 84px; height: 84px; border-radius: 999px; object-fit: cover; border: 1px solid hsl(var(--border)); background: hsl(var(--muted)); }
+    .person h4 { margin: 0; font-size: 1.05rem; }
+    .person p { margin: .15rem 0 0; color: hsl(var(--muted-foreground)); font-size: .95rem; }
+
+    .story { display: grid; grid-template-columns: 1fr; gap: 1.25rem; align-items: center; }
+    @media (min-width: 900px) { .story { grid-template-columns: 340px 1fr; gap: 2rem; } }
+    .story .photo { width: 100%; max-width: 340px; aspect-ratio: 1/1; border-radius: calc(var(--radius) + 6px); overflow: hidden; box-shadow: var(--shadow-elegant); border: 1px solid hsl(var(--border)); background: hsl(var(--muted)); }
+    .story .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    footer { border-top: 1px solid hsl(var(--border)); padding: 2rem 0; color: hsl(var(--muted-foreground)); text-align: center; }
+    .subtle { color: hsl(var(--muted-foreground)); }
+  </style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Saarthi",
+    "url": "about-us.html",
+    "description": "Caregivers for people of all age groups with special needs.",
+    "founder": {
+      "@type": "Person",
+      "name": "Ananya Sharma"
+    },
+    "employee": [
+      { "@type": "Person", "name": "Rahul Verma", "jobTitle": "Chief Operating Officer" },
+      { "@type": "Person", "name": "Dr. Meera Iyer", "jobTitle": "Head of Clinical Programs" }
+    ],
+    "memberOf": {
+      "@type": "NGO",
+      "name": "Saarthi Care Network"
+    }
+  }
+  </script>
+
+<link rel="stylesheet" href="commonstyles.css">
+<script src="header.js" defer></script>
+
+</head>
+<body>
+  
+<header>
+  <div class="brand">Saarthi</div>
+  <nav>
+    <a href="home.html">Home</a>
+    <a href="About us.html" aria-current="page" >About us</a>
+    <a href="finder acha wala.html">School &amp; Therapist Finder</a>
+    <a href="r6.html" >Resources</a>
+    <a href="Community forum.html">Community</a>
+    <a href="Careers.html"> Career</a>
+    <a href="Contact us.html"> Contact us</a>
+  </nav>
+  <div class="controls">
+    <button id="decreaseFont" class="ctrl-btn">A-</button>
+    <input id="fontSlider" type="range" min="75" max="150" value="100" class="font-slider" title="Font size percentage">
+    <button id="increaseFont" class="ctrl-btn">A+</button>
+    <button id="accessibleToggle" class="ctrl-btn">CONTRAST</button>
+  </div>
+</header>
+
+
+
+
+  <section class="hero" aria-labelledby="page-title">
+    <div class="container hero-inner">
+      <span class="eyebrow">Care for all age groups with special needs</span>
+      <h1 id="page-title">About Saarthi – Our Mission, Vision and People</h1>
+      <p>We are caregivers, therapists, mentors and community allies helping individuals and families navigate daily life with dignity, safety, and joy.</p>
+      <div style="margin-top:1rem">
+        <a class="btn btn-primary" href="#mission">Our Mission</a>
+        <a class="btn" href="#leadership" style="margin-left:.5rem">Meet the Team</a>
+      </div>
+    </div>
+  </section>
+
+  <main id="main" role="main">
+    <section id="mission" aria-labelledby="mission-title">
+      <div class="container">
+        <h2 class="section-title" id="mission-title">Mission & Vision</h2>
+        <div class="two-col">
+          <article class="card" aria-labelledby="mission-h">
+            <h3 id="mission-h">Our Mission</h3>
+            <p class="subtle">To deliver person-first, accessible, and trusted care for people of all age groups with special needs, empowering families with the right support at the right time.</p>
+          </article>
+          <article class="card" aria-labelledby="vision-h">
+            <h3 id="vision-h">Our Vision</h3>
+            <p class="subtle">A world where every individual with special needs can learn, live, and thrive with dignity—supported by informed families, trained caregivers, and an inclusive community.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="story" aria-labelledby="story-title">
+      <div class="container">
+        <h2 class="section-title" id="story-title">Our Story</h2>
+        <div class="story">
+          <div class="photo" aria-hidden="true">
+            <img src="placeholder.svg" alt="Portrait of our founder Ananya Sharma" loading="lazy" />
+          </div>
+          <article class="card">
+            <h3>Why we started</h3>
+            <p>Our journey began with a simple, heartfelt observation: families caring for loved ones with special needs often carry invisible loads—coordinating therapies, balancing school and work, and searching for trusted help. When our founder, Ananya Sharma, supported a close relative with developmental needs, she experienced first-hand how fragmented the care system can feel.</p>
+            <p>We built Saarthi to change that—to be a steady companion for families. Today, we connect trained caregivers and therapists with households across different life stages—from early intervention to adult independence—so that every person receives consistent, compassionate care.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="principles" aria-labelledby="principles-title">
+      <div class="container">
+        <h2 class="section-title" id="principles-title">Guiding Principles</h2>
+        <div class="principles" role="list">
+          <div class="principle" role="listitem">
+            <h4>Person‑first care</h4>
+            <p>We honor strengths, preferences, and goals of each individual.</p>
+          </div>
+          <div class="principle" role="listitem">
+            <h4>Dignity & Respect</h4>
+            <p>Every interaction is rooted in empathy, privacy, and consent.</p>
+          </div>
+          <div class="principle" role="listitem">
+            <h4>Safety & Trust</h4>
+            <p>Background checks, training, and transparent communication.</p>
+          </div>
+          <div class="principle" role="listitem">
+            <h4>Evidence‑based</h4>
+            <p>We align with clinical best practices and continuous learning.</p>
+          </div>
+          <div class="principle" role="listitem">
+            <h4>Family Partnership</h4>
+            <p>Care plans are co‑created with families and educators.</p>
+          </div>
+          <div class="principle" role="listitem">
+            <h4>Inclusion & Access</h4>
+            <p>Services designed for diverse ages, abilities, and languages.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="leadership" aria-labelledby="leadership-title">
+      <div class="container">
+        <h2 class="section-title" id="leadership-title">Leadership Team</h2>
+        <div class="people-grid">
+          <article class="person" aria-label="Ananya Sharma, Founder & CEO">
+            <img class="avatar" src="placeholder.svg" alt="Founder & CEO – Ananya Sharma" loading="lazy" />
+            <div>
+              <h4>Ananya Sharma</h4>
+              <p>Founder & Chief Executive Officer</p>
+            </div>
+          </article>
+          <article class="person" aria-label="Rahul Verma, COO">
+            <img class="avatar" src="placeholder.svg" alt="Chief Operating Officer – Rahul Verma" loading="lazy" />
+            <div>
+              <h4>Rahul Verma</h4>
+              <p>Chief Operating Officer</p>
+            </div>
+          </article>
+          <article class="person" aria-label="Dr. Meera Iyer, Head of Clinical Programs">
+            <img class="avatar" src="placeholder.svg" alt="Head of Clinical Programs – Dr. Meera Iyer" loading="lazy" />
+            <div>
+              <h4>Dr. Meera Iyer</h4>
+              <p>Head of Clinical Programs</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="board" aria-labelledby="board-title">
+      <div class="container">
+        <h2 class="section-title" id="board-title">Board of Directors</h2>
+        <div class="people-grid">
+          <article class="person" aria-label="Rakesh Gupta, Chairperson">
+            <img class="avatar" src="placeholder.svg" alt="Board Chairperson – Rakesh Gupta" loading="lazy" />
+            <div>
+              <h4>Rakesh Gupta</h4>
+              <p>Chairperson</p>
+            </div>
+          </article>
+          <article class="person" aria-label="Priya Nair, Director">
+            <img class="avatar" src="placeholder.svg" alt="Board Director – Priya Nair" loading="lazy" />
+            <div>
+              <h4>Priya Nair</h4>
+              <p>Director</p>
+            </div>
+          </article>
+          <article class="person" aria-label="Vivek Rao, Director">
+            <img class="avatar" src="placeholder.svg" alt="Board Director – Vivek Rao" loading="lazy" />
+            <div>
+              <h4>Vivek Rao</h4>
+              <p>Director</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer role="contentinfo" id="contact">
+    <div class="container">
+      <p class="subtle">© <span id="year"></span> Saarthi. Care for people of all age groups with special needs.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Small enhancement: current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+<a href="hidden-login.html" style="position:fixed;right:10px;bottom:10px;font-size:12px;color:blue;text-decoration:underline;">
+  Admin Login
+</a>
+
+</body>
+</html>
