@@ -439,23 +439,147 @@
         calcWage();
       });
     })();
-document.getElementById('screenReaderBtn').addEventListener('click', function () {
-    // Get all visible text from the page
-    const text = document.body.innerText;
-
-    // Create a speech synthesis utterance
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    // Optional: set voice, pitch, rate
-    utterance.rate = 1; // speed
-    utterance.pitch = 1; // tone
-
-    // Speak the text
-    speechSynthesis.speak(utterance);
-});
 
 
   </script>
+
+<script>
+/* Robust Read-Aloud (SpeechSynthesis) — paste before </body> or in external .js (defer) */
+(function(){
+  // IDs we might have used — script will attach to first match.
+  const ids = ['screenreader-toggle','screenReaderBtn','screenReaderBtnAlt','screenReaderPlayBtn','screenReaderBtn'];
+  let btn = ids.map(id => document.getElementById(id)).find(Boolean);
+
+  // fallback: create a small floating button if none exists
+  if(!btn){
+    btn = document.createElement('button');
+    btn.id = 'screenReaderBtn';
+    btn.textContent = '🔊 Read Aloud';
+    btn.style.cssText = 'position:fixed;right:18px;bottom:18px;z-index:9999;padding:10px 12px;border-radius:8px;';
+    document.body.appendChild(btn);
+  }
+
+  // Utility: get main readable text (prefer <main> / role=main / article)
+  function getMainText(){
+    const root = document.querySelector('main') || document.querySelector('[role="main"]') || document.querySelector('article') || document.body;
+    const clone = root.cloneNode(true);
+
+    // remove elements we don't want read
+    clone.querySelectorAll('nav, header, footer, script, style, noscript, [aria-hidden="true"], [hidden]').forEach(n=>n.remove());
+
+    // gather visible text nodes
+    const walker = document.createTreeWalker(clone, NodeFilter.SHOW_TEXT);
+    let text = '', node;
+    while(node = walker.nextNode()){
+      const t = node.textContent.trim();
+      if(t) text += t + ' ';
+    }
+    return text.replace(/\s+/g,' ').trim();
+  }
+
+  // split to sentence-aware chunks (maxChars safe for browsers)
+  function splitToChunks(text, maxChars=1600){
+    if(!text) return [];
+    const sentences = text.match(/[^.!?]+[.!?]*[\s\n]*/g) || [text];
+    const chunks = [];
+    let cur = '';
+    for(const s of sentences){
+      if((cur + ' ' + s).length <= maxChars){
+        cur = (cur ? cur + ' ' : '') + s;
+      } else {
+        if(cur) chunks.push(cur);
+        if(s.length > maxChars){
+          // break long sentence into slices
+          for(let i=0; i<s.length; i+=maxChars) chunks.push(s.slice(i,i+maxChars));
+          cur = '';
+        } else {
+          cur = s;
+        }
+      }
+    }
+    if(cur) chunks.push(cur);
+    return chunks;
+  }
+
+  let queue = [], currentUtterance = null;
+
+  function speakIndex(i){
+    if(i >= queue.length){
+      btn.setAttribute('aria-pressed','false');
+      btn.textContent = '🔊 Read Aloud';
+      return;
+    }
+    const u = new SpeechSynthesisUtterance(queue[i]);
+    currentUtterance = u;
+    u.lang = document.documentElement.lang || 'en-US';
+    u.rate = 1;
+    u.pitch = 1;
+    u.onend = () => {
+      currentUtterance = null;
+      speakIndex(i+1);
+    };
+    u.onerror = (e) => {
+      console.error('TTS error', e);
+      currentUtterance = null;
+      speakIndex(i+1);
+    };
+    window.speechSynthesis.speak(u);
+    btn.setAttribute('aria-pressed','true');
+    btn.textContent = '⏸️ Pause';
+  }
+
+  function startReading(){
+    if(!('speechSynthesis' in window)) { alert('Text-to-speech not supported in this browser.'); return; }
+    const text = getMainText();
+    if(!text){ alert('No readable text found on this page.'); return; }
+    queue = splitToChunks(text, 1600);
+    speakIndex(0);
+  }
+
+  function togglePlayPause(){
+    if(window.speechSynthesis.speaking){
+      if(window.speechSynthesis.paused){
+        window.speechSynthesis.resume();
+        btn.textContent = '⏸️ Pause';
+        btn.setAttribute('aria-pressed','true');
+      } else {
+        window.speechSynthesis.pause();
+        btn.textContent = '▶️ Resume';
+        btn.setAttribute('aria-pressed','false');
+      }
+      return;
+    }
+    // not speaking — start fresh
+    startReading();
+  }
+
+  function stopReading(){
+    window.speechSynthesis.cancel();
+    btn.setAttribute('aria-pressed','false');
+    btn.textContent = '🔊 Read Aloud';
+  }
+
+  // attach click: normal click = toggle play/pause; shift+click = stop
+  btn.addEventListener('click', function(e){
+    if(e.shiftKey){ stopReading(); return; }
+    togglePlayPause();
+  });
+
+  // pause when page hidden (optional)
+  document.addEventListener('visibilitychange', function(){
+    if(document.hidden && window.speechSynthesis.speaking && !window.speechSynthesis.paused){
+      window.speechSynthesis.pause();
+      btn.textContent = '▶️ Resume';
+      btn.setAttribute('aria-pressed','false');
+    }
+  });
+
+  // clean up on unload
+  window.addEventListener('beforeunload', ()=> window.speechSynthesis.cancel());
+})();
+</script>
+
+
 </body>
 </html>
 
